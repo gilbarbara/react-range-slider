@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RangeSlider should render properly 1`] = `
+<InputSlider
+  axis="x"
+  onChange={[MockFunction]}
+  onDragEnd={[MockFunction]}
+  x={0}
+  xMax={100}
+  xMin={0}
+  xStep={1}
+  y={0}
+  yMax={100}
+  yMin={0}
+  yStep={1}
+>
+  <div
+    className="rrs-slider rrs-slider-x "
+  >
+    <div
+      className="rrs-track"
+      onClick={[Function]}
+    >
+      <div
+        className="rrs-range"
+        style={
+          Object {
+            "width": "0%",
+          }
+        }
+      />
+      <div
+        className="rrs-handle"
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        style={
+          Object {
+            "bottom": "0%",
+            "left": "0%",
+          }
+        }
+      />
+    </div>
+  </div>
+</InputSlider>
+`;

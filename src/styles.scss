@@ -1,0 +1,117 @@
+$color-base: #ccc;
+$color-primary: #4b4b4b;
+$fix: 6px;
+$height: 20px;
+$padding: 6px;
+$size: 4px;
+$width: 20px;
+$xy-handle-size: 20px;
+
+.rrs-slider {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: $padding;
+}
+
+.rrs-track {
+  background-color: $color-base;
+  border-radius: 3px;
+  box-sizing: border-box;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.rrs-range {
+  background-color: $color-primary;
+  border-radius: 3px;
+  position: absolute;
+}
+
+.rrs-handle {
+  box-sizing: border-box;
+  height: $height;
+  position: absolute;
+  width: $width;
+
+  &:after {
+    background-color: #fff;
+    border: 2px solid $color-primary;
+    border-radius: 4px;
+    box-sizing: border-box;
+    content: '';
+    display: block;
+    position: absolute;
+  }
+}
+
+.rrs-slider-x {
+  height: $height + ($padding * 2);
+  width: 100%;
+
+  .rrs-track {
+    height: $height;
+  }
+
+  .rrs-handle {
+    &:after {
+      height: $height + $fix;
+      left: -($size + $fix)/2;
+      top: -$fix / 2;
+      width: $size + $fix;
+    }
+  }
+
+  .rrs-range {
+    top: 0;
+    height: 100%;
+  }
+}
+
+.rrs-slider-y {
+  height: 100%;
+  width: $width + ($padding * 2);
+
+  .rrs-track {
+    width: $width;
+  }
+
+  .rrs-handle {
+    &:after {
+      bottom: -($size + $fix)/2;
+      height: $size + $fix;
+      left: -$fix / 2;
+      width: $width + $fix;
+    }
+  }
+
+  .rrs-range {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+.rrs-slider-xy {
+  height: 100%;
+  width: 100%;
+
+  .rrs-track {
+    background-color: $color-primary;
+    height: 100%;
+    width: 100%;
+  }
+
+  .rrs-handle {
+    &:after {
+      background-color: transparent;
+      border: 2px solid $color-base;
+      border-radius: 50%;
+      bottom: -$xy-handle-size / 2;
+      height: $xy-handle-size;
+      left: -$xy-handle-size / 2;
+      position: absolute;
+      width: $xy-handle-size;
+    }
+  }
+}
