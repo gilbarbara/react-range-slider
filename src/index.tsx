@@ -186,12 +186,12 @@ class InputSlider extends Component<Props> {
     const style: Style = {};
 
     /* istanbul ignore else */
-    if (axis === 'x') {
+    if (['x', 'xy'].indexOf(axis!) > -1) {
       style.width = `${x}%`;
     }
 
     /* istanbul ignore else */
-    if (axis === 'y') {
+    if (['y', 'xy'].indexOf(axis!) > -1) {
       style.height = `${y}%`;
     }
 
