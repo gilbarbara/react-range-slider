@@ -4,6 +4,8 @@
 
 A range slider component for React
 
+View the [demo](https://qxxop6x4w4.codesandbox.io/)
+
 ## Installation
 
 ```sh
