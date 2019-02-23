@@ -16,7 +16,9 @@ npm i @gilbarbara/react-range-slider
 import React, { Component } from 'react';
 import RangeSlider from '@gilbarbara/react-range-slider';
 
-class App extends Component {
+import '@gilbarbara/react-range-slider/lib/styles.css';
+
+export default class App extends Component {
   state = {
     x: 10,
     y: 10,
