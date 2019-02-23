@@ -101,7 +101,7 @@
     "yargs": "^13.2.1"
   },
   "scripts": {
-    "build": "npm run clean && npm run build:js && npm run build:css",
+    "build": "npm run clean && npm run build:js && npm run build:css && cp src/styles.scss lib/",
     "build:js": "tsc --outDir lib",
     "build:css": "node-sass -o lib src/styles.scss",
     "watch": "npm run watch:ts & npm run watch:scss",

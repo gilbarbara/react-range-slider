@@ -78,6 +78,25 @@ Change callback
 **onDragEnd** {function}  
 DragEnd callback
 
+## Customization
+
+If you are using SCSS you can change the variables and import the .scss directly.
+
+```scss
+$rrs-color: #007bff;
+$rrs-handle-space: 6px;
+$rrs-handle-border-color: #000;
+$rrs-handle-color: #fff;
+$rrs-handle-size: 10px;
+$rrs-handle-size-xy: 20px;
+$rrs-height: 20px;
+$rrs-padding: 6px;
+$rrs-track-color: #ccc;
+$rrs-width: 20px;
+
+@import '~@gilbarbara/react-range-slider/lib/styles';
+```
+
 ## License
 
 MIT
