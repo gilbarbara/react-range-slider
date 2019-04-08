@@ -4,9 +4,9 @@ module.exports = {
   coverageThreshold: {
     global: {
       branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: 80,
+      functions: 90,
+      lines: 90,
+      statements: 90,
     },
   },
   moduleDirectories: ['node_modules', 'src', './'],
@@ -14,7 +14,7 @@ module.exports = {
   setupFiles: ['<rootDir>/test/__setup__/setupFiles.js'],
   setupFilesAfterEnv: ['<rootDir>/test/__setup__/setupTests.js'],
   testRegex: '/test/.*?\\.(test|spec)\\.jsx?$',
-  testURL: 'http://localhost:1337/',
+  testURL: 'http://localhost:3000/',
   transform: {
     // '^.+\\.tsx?$': 'ts-jest',
     '^.+\\.(t|j)sx?$': 'babel-jest',
