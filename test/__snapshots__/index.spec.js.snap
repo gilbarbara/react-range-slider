@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RangeSlider should render properly 1`] = `
-<InputSlider
+exports[`RangeSlider with axis \`x\` should render properly 1`] = `
+<RangeSlider
   axis="x"
   onChange={[MockFunction]}
   onDragEnd={[MockFunction]}
@@ -15,16 +15,39 @@ exports[`RangeSlider should render properly 1`] = `
   yStep={1}
 >
   <div
-    className="rrs-slider rrs-slider-x "
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "display": "inline-block",
+        "height": 32,
+        "padding": "6px",
+        "width": "100%",
+      }
+    }
   >
     <div
       className="rrs-track"
       onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#ccc",
+          "borderRadius": "3px",
+          "boxSizing": "border-box",
+          "height": "20px",
+          "position": "relative",
+          "width": "100%",
+        }
+      }
     >
       <div
         className="rrs-range"
         style={
           Object {
+            "backgroundColor": "#007bff",
+            "borderRadius": "3px",
+            "height": "100%",
+            "position": "absolute",
+            "top": 0,
             "width": "0%",
           }
         }
@@ -36,11 +59,561 @@ exports[`RangeSlider should render properly 1`] = `
         style={
           Object {
             "bottom": "0%",
+            "boxSizing": "border-box",
+            "height": "20px",
             "left": "0%",
+            "position": "absolute",
+            "width": "20px",
+          }
+        }
+      >
+        <span
+          style={
+            Object {
+              "backgroundColor": "#fff",
+              "border": "2px solid #000",
+              "borderRadius": "4px",
+              "boxSizing": "border-box",
+              "display": "block",
+              "height": 26,
+              "left": -5,
+              "position": "absolute",
+              "top": -3,
+              "width": "10px",
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</RangeSlider>
+`;
+
+exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
+<RangeSlider
+  axis="xy"
+  onChange={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {
+            "x": 65,
+            "y": 0,
+          },
+          Object {
+            "axis": "x",
+            "onChange": [MockFunction] {
+              "calls": [Circular],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "onDragEnd": [MockFunction] {
+              "calls": Array [
+                Array [
+                  Object {
+                    "x": 65,
+                    "y": 0,
+                  },
+                  [Circular],
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "x": 0,
+            "xMax": 100,
+            "xMin": 0,
+            "xStep": 1,
+            "y": 0,
+            "yMax": 100,
+            "yMin": 0,
+            "yStep": 1,
+          },
+        ],
+        Array [
+          Object {
+            "x": 25,
+            "y": 0,
+          },
+          Object {
+            "axis": "x",
+            "onChange": [MockFunction] {
+              "calls": [Circular],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "onDragEnd": [MockFunction] {
+              "calls": Array [
+                Array [
+                  Object {
+                    "x": 65,
+                    "y": 0,
+                  },
+                  [Circular],
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "x": 0,
+            "xMax": 100,
+            "xMin": 0,
+            "xStep": 1,
+            "y": 0,
+            "yMax": 100,
+            "yMin": 0,
+            "yStep": 1,
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  onDragEnd={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {
+            "x": 65,
+            "y": 0,
+          },
+          Object {
+            "axis": "x",
+            "onChange": [MockFunction] {
+              "calls": Array [
+                Array [
+                  Object {
+                    "x": 65,
+                    "y": 0,
+                  },
+                  [Circular],
+                ],
+                Array [
+                  Object {
+                    "x": 25,
+                    "y": 0,
+                  },
+                  [Circular],
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "onDragEnd": [MockFunction] {
+              "calls": [Circular],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "x": 0,
+            "xMax": 100,
+            "xMin": 0,
+            "xStep": 1,
+            "y": 0,
+            "yMax": 100,
+            "yMin": 0,
+            "yStep": 1,
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  x={0}
+  xMax={100}
+  xMin={0}
+  xStep={1}
+  y={0}
+  yMax={100}
+  yMin={0}
+  yStep={1}
+>
+  <div
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "display": "inline-block",
+        "height": "100%",
+        "padding": "6px",
+        "width": "100%",
+      }
+    }
+  >
+    <div
+      className="rrs-track"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#ccc",
+          "borderRadius": "3px",
+          "boxSizing": "border-box",
+          "height": "100%",
+          "minHeight": "50px",
+          "position": "relative",
+          "width": "100%",
+        }
+      }
+    >
+      <div
+        className="rrs-range"
+        style={
+          Object {
+            "backgroundColor": "#007bff",
+            "borderRadius": "3px",
+            "bottom": 0,
+            "height": "0%",
+            "position": "absolute",
+            "width": "0%",
           }
         }
       />
+      <div
+        className="rrs-handle"
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        style={
+          Object {
+            "bottom": "0%",
+            "boxSizing": "border-box",
+            "height": "20px",
+            "left": "0%",
+            "position": "absolute",
+            "width": "20px",
+          }
+        }
+      >
+        <span
+          style={
+            Object {
+              "backgroundColor": "transparent",
+              "border": "2px solid #000",
+              "borderRadius": "50%",
+              "bottom": -10,
+              "boxSizing": "border-box",
+              "display": "block",
+              "height": "20px",
+              "left": -10,
+              "position": "absolute",
+              "width": "20px",
+            }
+          }
+        />
+      </div>
     </div>
   </div>
-</InputSlider>
+</RangeSlider>
+`;
+
+exports[`RangeSlider with axis \`y\` should render properly 1`] = `
+<RangeSlider
+  axis="y"
+  onChange={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {
+            "x": 65,
+            "y": 0,
+          },
+          Object {
+            "axis": "x",
+            "onChange": [MockFunction] {
+              "calls": [Circular],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "onDragEnd": [MockFunction] {
+              "calls": Array [
+                Array [
+                  Object {
+                    "x": 65,
+                    "y": 0,
+                  },
+                  [Circular],
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "x": 0,
+            "xMax": 100,
+            "xMin": 0,
+            "xStep": 1,
+            "y": 0,
+            "yMax": 100,
+            "yMin": 0,
+            "yStep": 1,
+          },
+        ],
+        Array [
+          Object {
+            "x": 25,
+            "y": 0,
+          },
+          Object {
+            "axis": "x",
+            "onChange": [MockFunction] {
+              "calls": [Circular],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "onDragEnd": [MockFunction] {
+              "calls": Array [
+                Array [
+                  Object {
+                    "x": 65,
+                    "y": 0,
+                  },
+                  [Circular],
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "x": 0,
+            "xMax": 100,
+            "xMin": 0,
+            "xStep": 1,
+            "y": 0,
+            "yMax": 100,
+            "yMin": 0,
+            "yStep": 1,
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  onDragEnd={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          Object {
+            "x": 65,
+            "y": 0,
+          },
+          Object {
+            "axis": "x",
+            "onChange": [MockFunction] {
+              "calls": Array [
+                Array [
+                  Object {
+                    "x": 65,
+                    "y": 0,
+                  },
+                  [Circular],
+                ],
+                Array [
+                  Object {
+                    "x": 25,
+                    "y": 0,
+                  },
+                  [Circular],
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "onDragEnd": [MockFunction] {
+              "calls": [Circular],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
+            "x": 0,
+            "xMax": 100,
+            "xMin": 0,
+            "xStep": 1,
+            "y": 0,
+            "yMax": 100,
+            "yMin": 0,
+            "yStep": 1,
+          },
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
+  x={0}
+  xMax={100}
+  xMin={0}
+  xStep={1}
+  y={0}
+  yMax={100}
+  yMin={0}
+  yStep={1}
+>
+  <div
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "display": "inline-block",
+        "height": "100%",
+        "padding": "6px",
+        "width": 32,
+      }
+    }
+  >
+    <div
+      className="rrs-track"
+      onClick={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#ccc",
+          "borderRadius": "3px",
+          "boxSizing": "border-box",
+          "height": "100%",
+          "minHeight": "50px",
+          "position": "relative",
+          "width": "20px",
+        }
+      }
+    >
+      <div
+        className="rrs-range"
+        style={
+          Object {
+            "backgroundColor": "#007bff",
+            "borderRadius": "3px",
+            "bottom": 0,
+            "height": "0%",
+            "left": 0,
+            "position": "absolute",
+            "width": "100%",
+          }
+        }
+      />
+      <div
+        className="rrs-handle"
+        onMouseDown={[Function]}
+        onTouchStart={[Function]}
+        style={
+          Object {
+            "bottom": "0%",
+            "boxSizing": "border-box",
+            "height": "20px",
+            "left": "0%",
+            "position": "absolute",
+            "width": "20px",
+          }
+        }
+      >
+        <span
+          style={
+            Object {
+              "backgroundColor": "#fff",
+              "border": "2px solid #000",
+              "borderRadius": "4px",
+              "bottom": -5,
+              "boxSizing": "border-box",
+              "display": "block",
+              "height": "10px",
+              "left": -3,
+              "position": "absolute",
+              "width": 26,
+            }
+          }
+        />
+      </div>
+    </div>
+  </div>
+</RangeSlider>
 `;

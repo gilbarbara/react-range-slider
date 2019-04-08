@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import blacklist from 'blacklist';
 
 import { RangeSliderPosition, RangeSliderProps, RangeSliderSize } from './types';
+import getStyles from './styles';
+import { getCoordinates, getValues } from './utils';
 
 class RangeSlider extends Component<RangeSliderProps> {
   private handle: HTMLElement | null = null;
@@ -55,8 +57,13 @@ class RangeSlider extends Component<RangeSliderProps> {
     return { x: left, y: bottom };
   }
 
+  private get styles() {
+    const { styles } = this.props;
+
+    return getStyles(styles);
+  }
+
   private getDragPosition = (e: MouseEvent | TouchEvent) => {
-    const { node } = this;
     const { x, y } = getCoordinates(e);
 
     return {
@@ -146,7 +153,7 @@ class RangeSlider extends Component<RangeSliderProps> {
       'axis',
       'onChange',
       'onDragEnd',
-      'className',
+      'styles',
       'x',
       'xMin',
       'xMax',
@@ -158,38 +165,61 @@ class RangeSlider extends Component<RangeSliderProps> {
     );
     const { x, y } = this.position;
     const position = { left: `${x}%`, bottom: `${y}%` };
-    const style: Style = {};
+    const size: RangeSliderSize = {};
+    let slider;
+    let range;
+    let track;
+    let handle;
 
     /* istanbul ignore else */
-    if (['x', 'xy'].indexOf(axis!) > -1) {
-      style.width = `${x}%`;
+    if (axis! === 'x') {
+      size.width = `${x}%`;
+      slider = this.styles.sliderX;
+      range = this.styles.rangeX;
+      track = this.styles.trackX;
+      handle = this.styles.handleX;
     }
 
     /* istanbul ignore else */
-    if (['y', 'xy'].indexOf(axis!) > -1) {
-      style.height = `${y}%`;
+    if (axis! === 'y') {
+      size.height = `${y}%`;
+      slider = this.styles.sliderY;
+      range = this.styles.rangeY;
+      track = this.styles.trackY;
+      handle = this.styles.handleY;
     }
 
-    rest.className = ['rrs-slider', `rrs-slider-${axis}`, this.props.className].join(' ');
+    /* istanbul ignore else */
+    if (axis! === 'xy') {
+      size.height = `${y}%`;
+      size.width = `${x}%`;
+      slider = this.styles.sliderXY;
+      range = this.styles.rangeXY;
+      track = this.styles.trackXY;
+      handle = this.styles.handleXY;
+    }
 
     return (
-      <div ref={c => (this.node = c)} {...rest}>
+      <div ref={c => (this.node = c)} style={slider} {...rest}>
         <div
           className="rrs-track"
           ref={c => (this.track = c)}
+          style={track}
           // @ts-ignore
           onClick={this.handleClickTrack}
         >
-          <div className="rrs-range" style={style} />
+          <div className="rrs-range" style={{ ...size, ...range }} />
           <div
             className="rrs-handle"
             ref={c => (this.handle = c)}
+            style={{ ...this.styles.handleWrapper, ...position }}
             // @ts-ignore
             onTouchStart={this.handleTouchStart}
             // @ts-ignore
             onMouseDown={this.handleMouseDown}
-            style={position}
-          />
+          >
+            <span style={handle} />
+          </div>
         </div>
       </div>
     );
