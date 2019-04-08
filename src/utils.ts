@@ -1,4 +1,4 @@
-import { Position, Props } from './index';
+import { RangeSliderPosition, RangeSliderProps } from './types';
 
 export function getCoordinates(e: MouseEvent | TouchEvent) {
   if (e instanceof TouchEvent) {
@@ -16,7 +16,11 @@ export function getCoordinates(e: MouseEvent | TouchEvent) {
   };
 }
 
-export function getValues(position: Position, props: Props, rect: ClientRect) {
+export function getValues(
+  position: RangeSliderPosition,
+  props: RangeSliderProps,
+  rect: ClientRect,
+) {
   const { axis, xMax, xMin, xStep, yMax, yMin, yStep } = props;
   const { height, width }: ClientRect = rect;
   let { x, y } = position;

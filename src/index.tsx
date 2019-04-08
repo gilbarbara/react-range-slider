@@ -1,42 +1,17 @@
 import React, { Component } from 'react';
 // @ts-ignore
 import blacklist from 'blacklist';
-import { getCoordinates, getValues } from './utils';
 
-export interface Position {
-  x: number;
-  y: number;
-}
+import { RangeSliderPosition, RangeSliderProps, RangeSliderSize } from './types';
 
-export interface Style {
-  height?: string;
-  width?: string;
-}
-
-export interface Props {
-  axis?: string;
-  onChange: (position: Position, props: object) => void;
-  onDragEnd?: (position: Position, props: object) => void;
-  x?: number;
-  xMax?: number;
-  xMin?: number;
-  xStep?: number;
-  y?: number;
-  yMax?: number;
-  yMin?: number;
-  yStep?: number;
-
-  [key: string]: any;
-}
-
-class InputSlider extends Component<Props> {
+class RangeSlider extends Component<RangeSliderProps> {
   private handle: HTMLElement | null = null;
   private node: HTMLElement | null = null;
   private offset: { x: number; y: number } = { x: 0, y: 0 };
   private start: { x: number; y: number } = { x: 0, y: 0 };
   private track: HTMLElement | null = null;
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: Partial<RangeSliderProps> = {
     axis: 'x',
     x: 0,
     xMax: 100,
@@ -102,7 +77,7 @@ class InputSlider extends Component<Props> {
     this.offset = { x, y };
   };
 
-  private updatePosition = (position: Position) => {
+  private updatePosition = (position: RangeSliderPosition) => {
     const { onChange } = this.props;
     const rect: ClientRect = this.node!.getBoundingClientRect();
 
@@ -221,4 +196,4 @@ class InputSlider extends Component<Props> {
   }
 }
 
-export default InputSlider;
+export default RangeSlider;
