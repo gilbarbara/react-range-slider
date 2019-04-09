@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge';
 
-import { RangeSliderStyles, RangeSliderStylesProps, RangeSliderStylesOptions } from './types';
+import { RangeSliderStyles, RangeSliderStylesProp, RangeSliderStylesOptions } from './types';
 
 const defaultOptions = {
   handleBorder: '2px solid #000',
@@ -26,7 +26,7 @@ function num(value: string | number): number {
   return parseInt(value, 10);
 }
 
-export default function getStyles(styles?: RangeSliderStylesProps): RangeSliderStyles {
+export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderStyles {
   const options: RangeSliderStylesOptions = deepmerge(
     defaultOptions,
     styles ? (styles.options as RangeSliderStylesOptions) : {},

@@ -42,28 +42,15 @@ export interface RangeSliderStyles {
   trackY: React.CSSProperties;
 }
 
-export interface RangeSliderStylesProps {
-  options?: RangeSliderStylesOptions;
-  handleWrapper: React.CSSProperties;
-  handleX: React.CSSProperties;
-  handleXY: React.CSSProperties;
-  handleY: React.CSSProperties;
-  rangeX: React.CSSProperties;
-  rangeXY: React.CSSProperties;
-  rangeY: React.CSSProperties;
-  sliderX: React.CSSProperties;
-  sliderXY: React.CSSProperties;
-  sliderY: React.CSSProperties;
-  trackX: React.CSSProperties;
-  trackXY: React.CSSProperties;
-  trackY: React.CSSProperties;
+export interface RangeSliderStylesProp extends Partial<RangeSliderStyles> {
+  options?: Partial<RangeSliderStylesOptions>;
 }
 
 export interface RangeSliderProps {
   axis?: string;
   onChange: (position: RangeSliderPosition, props: object) => void;
   onDragEnd?: (position: RangeSliderPosition, props: object) => void;
-  styles?: RangeSliderStylesProps;
+  styles?: RangeSliderStylesProp;
   x?: number;
   xMax?: number;
   xMin?: number;
