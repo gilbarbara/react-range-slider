@@ -18,8 +18,6 @@ npm i @gilbarbara/react-range-slider
 import React, { Component } from 'react';
 import RangeSlider from '@gilbarbara/react-range-slider';
 
-import '@gilbarbara/react-range-slider/lib/styles.css';
-
 export default class App extends Component {
   state = {
     x: 10,
@@ -82,21 +80,17 @@ DragEnd callback
 
 ## Customization
 
-If you are using SCSS you can change the variables and import the .scss directly.
+You can customize the UI with a `styles` prop.
+Check out [styles.ts](src/styles.ts) for more information.
 
-```scss
-$rrs-color: #007bff;
-$rrs-handle-space: 6px;
-$rrs-handle-border-color: #000;
-$rrs-handle-color: #fff;
-$rrs-handle-size: 10px;
-$rrs-handle-size-xy: 20px;
-$rrs-height: 20px;
-$rrs-padding: 6px;
-$rrs-track-color: #ccc;
-$rrs-width: 20px;
-
-@import '~@gilbarbara/react-range-slider/lib/styles';
+```jsx
+<RangeSlider
+  ...
+  styles={{
+    height: '10px',
+    trackBorderRadius: 0,
+  }}
+/>
 ```
 
 ## License
