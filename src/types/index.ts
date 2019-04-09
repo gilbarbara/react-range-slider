@@ -13,6 +13,7 @@ export interface RangeSliderSize {
 export interface RangeSliderStylesOptions {
   handleBorder: string | number;
   handleBorderRadius: string | number;
+  handleBorderRadiusXY: string | number;
   handleColor: string;
   handleSize: string | number;
   handleSizeXY: string | number;

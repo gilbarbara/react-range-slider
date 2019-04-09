@@ -5,6 +5,7 @@ import { RangeSliderStyles, RangeSliderStylesProps, RangeSliderStylesOptions } f
 const defaultOptions = {
   handleBorder: '2px solid #000',
   handleBorderRadius: '4px',
+  handleBorderRadiusXY: '50%',
   handleColor: '#fff',
   handleSize: '10px',
   handleSizeXY: '20px',
@@ -26,7 +27,7 @@ function num(value: string | number): number {
 }
 
 export default function getStyles(styles?: RangeSliderStylesProps): RangeSliderStyles {
-  const mergedOptions: RangeSliderStylesOptions = deepmerge(
+  const options: RangeSliderStylesOptions = deepmerge(
     defaultOptions,
     styles ? (styles.options as RangeSliderStylesOptions) : {},
   );
@@ -34,12 +35,12 @@ export default function getStyles(styles?: RangeSliderStylesProps): RangeSliderS
   const slider = {
     boxSizing: 'border-box',
     display: 'inline-block',
-    padding: mergedOptions.padding,
+    padding: options.padding,
   };
 
   const track = {
-    backgroundColor: mergedOptions.trackColor,
-    borderRadius: mergedOptions.trackBorderRadius,
+    backgroundColor: options.trackColor,
+    borderRadius: options.trackBorderRadius,
     boxSizing: 'border-box',
     height: '100%',
     position: 'relative',
@@ -47,22 +48,22 @@ export default function getStyles(styles?: RangeSliderStylesProps): RangeSliderS
   };
 
   const range = {
-    backgroundColor: mergedOptions.rangeColor,
-    borderRadius: mergedOptions.trackBorderRadius,
+    backgroundColor: options.rangeColor,
+    borderRadius: options.trackBorderRadius,
     position: 'absolute',
   };
 
   const handleWrapper = {
     boxSizing: 'border-box',
-    height: mergedOptions.height,
+    height: options.height,
     position: 'absolute',
-    width: mergedOptions.width,
+    width: options.width,
   };
 
   const handle = {
-    backgroundColor: mergedOptions.handleColor,
-    border: mergedOptions.handleBorder,
-    borderRadius: mergedOptions.handleBorderRadius,
+    backgroundColor: options.handleColor,
+    border: options.handleBorder,
+    borderRadius: options.handleBorderRadius,
     boxSizing: 'border-box',
     display: 'block',
     position: 'absolute',
@@ -72,28 +73,28 @@ export default function getStyles(styles?: RangeSliderStylesProps): RangeSliderS
     handleWrapper,
     handleX: {
       ...handle,
-      height: num(mergedOptions.height) + num(mergedOptions.handleSpace),
-      left: -(num(mergedOptions.handleSize) / 2),
-      top: -(num(mergedOptions.handleSpace) / 2),
-      width: mergedOptions.handleSize,
+      height: num(options.height) + num(options.handleSpace),
+      left: -(num(options.handleSize) / 2),
+      top: -(num(options.handleSpace) / 2),
+      width: options.handleSize,
     },
     handleXY: {
       ...handle,
       backgroundColor: 'transparent',
-      border: mergedOptions.handleBorder,
-      borderRadius: '50%',
-      bottom: -(num(mergedOptions.handleSizeXY) / 2),
-      height: mergedOptions.handleSizeXY,
-      left: -(num(mergedOptions.handleSizeXY) / 2),
+      border: options.handleBorder,
+      borderRadius: options.handleBorderRadiusXY,
+      bottom: -(num(options.handleSizeXY) / 2),
+      height: options.handleSizeXY,
+      left: -(num(options.handleSizeXY) / 2),
       position: 'absolute',
-      width: mergedOptions.handleSizeXY,
+      width: options.handleSizeXY,
     },
     handleY: {
       ...handle,
-      bottom: -(num(mergedOptions.handleSize) / 2),
-      height: mergedOptions.handleSize,
-      left: -(num(mergedOptions.handleSpace) / 2),
-      width: num(mergedOptions.width) + num(mergedOptions.handleSpace),
+      bottom: -(num(options.handleSize) / 2),
+      height: options.handleSize,
+      left: -(num(options.handleSpace) / 2),
+      width: num(options.width) + num(options.handleSpace),
     },
     rangeX: {
       ...range,
@@ -112,7 +113,7 @@ export default function getStyles(styles?: RangeSliderStylesProps): RangeSliderS
     },
     sliderX: {
       ...slider,
-      height: num(mergedOptions.height) + num(mergedOptions.padding) * 2,
+      height: num(options.height) + num(options.padding) * 2,
       width: '100%',
     },
     sliderXY: {
@@ -123,11 +124,11 @@ export default function getStyles(styles?: RangeSliderStylesProps): RangeSliderS
     sliderY: {
       ...slider,
       height: '100%',
-      width: num(mergedOptions.width) + num(mergedOptions.padding) * 2,
+      width: num(options.width) + num(options.padding) * 2,
     },
     trackX: {
       ...track,
-      height: mergedOptions.height,
+      height: options.height,
     },
     trackXY: {
       ...track,
@@ -139,7 +140,7 @@ export default function getStyles(styles?: RangeSliderStylesProps): RangeSliderS
       ...track,
       height: '100%',
       minHeight: '50px',
-      width: mergedOptions.width,
+      width: options.width,
     },
   };
 
