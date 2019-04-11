@@ -36,6 +36,7 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
     boxSizing: 'border-box',
     display: 'inline-block',
     padding: options.padding,
+    transition: 'height 0.4s, width 0.4s',
   };
 
   const track = {
@@ -57,6 +58,7 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
     boxSizing: 'border-box',
     height: options.height,
     position: 'absolute',
+    transition: 'height 0.4s, width 0.4s',
     width: options.width,
   };
 
@@ -67,6 +69,7 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
     boxSizing: 'border-box',
     display: 'block',
     position: 'absolute',
+    transition: 'height 0.4s, width 0.4s',
   };
 
   const defaultStyles = {

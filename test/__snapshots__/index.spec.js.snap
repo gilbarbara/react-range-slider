@@ -3,6 +3,7 @@
 exports[`RangeSlider with axis \`x\` should render properly 1`] = `
 <RangeSlider
   axis="x"
+  classNamePrefix="rrs"
   onChange={[MockFunction]}
   onDragEnd={[MockFunction]}
   x={0}
@@ -15,18 +16,20 @@ exports[`RangeSlider with axis \`x\` should render properly 1`] = `
   yStep={1}
 >
   <div
+    className="rrs"
     style={
       Object {
         "boxSizing": "border-box",
         "display": "inline-block",
         "height": 32,
         "padding": "6px",
+        "transition": "height 0.4s, width 0.4s",
         "width": "100%",
       }
     }
   >
     <div
-      className="rrs-track"
+      className="rrs__track"
       onClick={[Function]}
       style={
         Object {
@@ -40,7 +43,7 @@ exports[`RangeSlider with axis \`x\` should render properly 1`] = `
       }
     >
       <div
-        className="rrs-range"
+        className="rrs__range"
         style={
           Object {
             "backgroundColor": "#007bff",
@@ -53,7 +56,6 @@ exports[`RangeSlider with axis \`x\` should render properly 1`] = `
         }
       />
       <div
-        className="rrs-handle"
         onMouseDown={[Function]}
         onTouchStart={[Function]}
         style={
@@ -63,11 +65,13 @@ exports[`RangeSlider with axis \`x\` should render properly 1`] = `
             "height": "20px",
             "left": "0%",
             "position": "absolute",
+            "transition": "height 0.4s, width 0.4s",
             "width": "20px",
           }
         }
       >
         <span
+          className="rrs__handle"
           style={
             Object {
               "backgroundColor": "#fff",
@@ -79,6 +83,7 @@ exports[`RangeSlider with axis \`x\` should render properly 1`] = `
               "left": -5,
               "position": "absolute",
               "top": -3,
+              "transition": "height 0.4s, width 0.4s",
               "width": "10px",
             }
           }
@@ -92,6 +97,7 @@ exports[`RangeSlider with axis \`x\` should render properly 1`] = `
 exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
 <RangeSlider
   axis="xy"
+  classNamePrefix="rrs"
   onChange={
     [MockFunction] {
       "calls": Array [
@@ -102,6 +108,7 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
           },
           Object {
             "axis": "x",
+            "classNamePrefix": "rrs",
             "onChange": [MockFunction] {
               "calls": [Circular],
               "results": Array [
@@ -149,6 +156,7 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
           },
           Object {
             "axis": "x",
+            "classNamePrefix": "rrs",
             "onChange": [MockFunction] {
               "calls": [Circular],
               "results": Array [
@@ -212,6 +220,7 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
           },
           Object {
             "axis": "x",
+            "classNamePrefix": "rrs",
             "onChange": [MockFunction] {
               "calls": Array [
                 Array [
@@ -278,18 +287,20 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
   yStep={1}
 >
   <div
+    className="rrs"
     style={
       Object {
         "boxSizing": "border-box",
         "display": "inline-block",
         "height": "100%",
         "padding": "6px",
+        "transition": "height 0.4s, width 0.4s",
         "width": "100%",
       }
     }
   >
     <div
-      className="rrs-track"
+      className="rrs__track"
       onClick={[Function]}
       style={
         Object {
@@ -304,7 +315,7 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
       }
     >
       <div
-        className="rrs-range"
+        className="rrs__range"
         style={
           Object {
             "backgroundColor": "#007bff",
@@ -317,7 +328,6 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
         }
       />
       <div
-        className="rrs-handle"
         onMouseDown={[Function]}
         onTouchStart={[Function]}
         style={
@@ -327,11 +337,13 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
             "height": "20px",
             "left": "0%",
             "position": "absolute",
+            "transition": "height 0.4s, width 0.4s",
             "width": "20px",
           }
         }
       >
         <span
+          className="rrs__handle"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -343,6 +355,7 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
               "height": "20px",
               "left": -10,
               "position": "absolute",
+              "transition": "height 0.4s, width 0.4s",
               "width": "20px",
             }
           }
@@ -356,6 +369,7 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
 exports[`RangeSlider with axis \`y\` should render properly 1`] = `
 <RangeSlider
   axis="y"
+  classNamePrefix="rrs"
   onChange={
     [MockFunction] {
       "calls": Array [
@@ -366,6 +380,7 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
           },
           Object {
             "axis": "x",
+            "classNamePrefix": "rrs",
             "onChange": [MockFunction] {
               "calls": [Circular],
               "results": Array [
@@ -413,6 +428,7 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
           },
           Object {
             "axis": "x",
+            "classNamePrefix": "rrs",
             "onChange": [MockFunction] {
               "calls": [Circular],
               "results": Array [
@@ -476,6 +492,7 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
           },
           Object {
             "axis": "x",
+            "classNamePrefix": "rrs",
             "onChange": [MockFunction] {
               "calls": Array [
                 Array [
@@ -542,18 +559,20 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
   yStep={1}
 >
   <div
+    className="rrs"
     style={
       Object {
         "boxSizing": "border-box",
         "display": "inline-block",
         "height": "100%",
         "padding": "6px",
+        "transition": "height 0.4s, width 0.4s",
         "width": 32,
       }
     }
   >
     <div
-      className="rrs-track"
+      className="rrs__track"
       onClick={[Function]}
       style={
         Object {
@@ -568,7 +587,7 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
       }
     >
       <div
-        className="rrs-range"
+        className="rrs__range"
         style={
           Object {
             "backgroundColor": "#007bff",
@@ -582,7 +601,6 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
         }
       />
       <div
-        className="rrs-handle"
         onMouseDown={[Function]}
         onTouchStart={[Function]}
         style={
@@ -592,11 +610,13 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
             "height": "20px",
             "left": "0%",
             "position": "absolute",
+            "transition": "height 0.4s, width 0.4s",
             "width": "20px",
           }
         }
       >
         <span
+          className="rrs__handle"
           style={
             Object {
               "backgroundColor": "#fff",
@@ -608,6 +628,7 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
               "height": "10px",
               "left": -3,
               "position": "absolute",
+              "transition": "height 0.4s, width 0.4s",
               "width": 26,
             }
           }

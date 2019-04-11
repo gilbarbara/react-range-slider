@@ -86,11 +86,15 @@ class RangeSlider extends Component<RangeSliderProps> {
 
   private updatePosition = (position: RangeSliderPosition) => {
     const { onChange } = this.props;
-    const rect: ClientRect = this.node!.getBoundingClientRect();
+    let rect: ClientRect;
+
+    if (this.node) {
+      rect = this.node.getBoundingClientRect();
+    }
 
     /* istanbul ignore else */
     if (onChange) {
-      onChange(getValues(position, this.props, rect), this.props);
+      onChange(getValues(position, this.props, rect! || {}), this.props);
     }
   };
 
@@ -114,7 +118,11 @@ class RangeSlider extends Component<RangeSliderProps> {
   private handleDragEnd = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
     const { onDragEnd } = this.props;
-    const rect: ClientRect = this.node!.getBoundingClientRect();
+    let rect: ClientRect;
+
+    if (this.node) {
+      rect = this.node.getBoundingClientRect();
+    }
 
     document.removeEventListener('mousemove', this.handleDrag);
     document.removeEventListener('mouseup', this.handleDragEnd);
@@ -125,7 +133,7 @@ class RangeSlider extends Component<RangeSliderProps> {
 
     /* istanbul ignore else */
     if (onDragEnd) {
-      onDragEnd(getValues(this.getDragPosition(e), this.props, rect), this.props);
+      onDragEnd(getValues(this.getDragPosition(e), this.props, rect! || {}), this.props);
     }
   };
 
@@ -147,20 +155,21 @@ class RangeSlider extends Component<RangeSliderProps> {
   };
 
   public render() {
-    const { axis } = this.props;
+    const { axis, classNamePrefix } = this.props;
     const rest = blacklist(
       this.props,
       'axis',
+      'classNamePrefix',
       'onChange',
       'onDragEnd',
       'styles',
       'x',
-      'xMin',
       'xMax',
+      'xMin',
       'xStep',
       'y',
-      'yMin',
       'yMax',
+      'yMin',
       'yStep',
     );
     const { x, y } = this.position;
@@ -200,17 +209,19 @@ class RangeSlider extends Component<RangeSliderProps> {
     }
 
     return (
-      <div ref={c => (this.node = c)} style={slider} {...rest}>
+      <div ref={c => (this.node = c)} style={slider} {...rest} className={classNamePrefix}>
         <div
-          className="rrs-track"
+          className={classNamePrefix && `${classNamePrefix}__track`}
           ref={c => (this.track = c)}
           style={track}
           // @ts-ignore
           onClick={this.handleClickTrack}
         >
-          <div className="rrs-range" style={{ ...size, ...range }} />
           <div
-            className="rrs-handle"
+            className={classNamePrefix && `${classNamePrefix}__range`}
+            style={{ ...size, ...range }}
+          />
+          <div
             ref={c => (this.handle = c)}
             style={{ ...this.styles.handleWrapper, ...position }}
             // @ts-ignore
@@ -218,7 +229,7 @@ class RangeSlider extends Component<RangeSliderProps> {
             // @ts-ignore
             onMouseDown={this.handleMouseDown}
           >
-            <span style={handle} />
+            <span className={classNamePrefix && `${classNamePrefix}__handle`} style={handle} />
           </div>
         </div>
       </div>

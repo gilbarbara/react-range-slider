@@ -5,7 +5,14 @@ const mockOnChange = jest.fn();
 const mockOnDragEnd = jest.fn();
 
 function setup(axis = 'x') {
-  return mount(<RangeSlider axis={axis} onChange={mockOnChange} onDragEnd={mockOnDragEnd} />);
+  return mount(
+    <RangeSlider
+      axis={axis}
+      classNamePrefix="rrs"
+      onChange={mockOnChange}
+      onDragEnd={mockOnDragEnd}
+    />,
+  );
 }
 
 describe('RangeSlider', () => {
@@ -30,7 +37,7 @@ describe('RangeSlider', () => {
         width: 200,
       });
 
-      wrapper.find('.rrs-handle').simulate('mousedown', {
+      wrapper.find('.rrs__handle').simulate('mousedown', {
         clientX: 100,
         clientY: 0,
         currentTarget: {},
@@ -60,6 +67,7 @@ describe('RangeSlider', () => {
         { x: 65, y: 0 },
         {
           axis: 'x',
+          classNamePrefix: 'rrs',
           onChange: expect.any(Function),
           onDragEnd: expect.any(Function),
           x: 0,
@@ -86,6 +94,7 @@ describe('RangeSlider', () => {
         { x: 65, y: 0 },
         {
           axis: 'x',
+          classNamePrefix: 'rrs',
           onChange: expect.any(Function),
           onDragEnd: expect.any(Function),
           x: 0,
@@ -110,7 +119,7 @@ describe('RangeSlider', () => {
         width: 200,
       });
 
-      wrapper.find('.rrs-handle').simulate('touchstart', {
+      wrapper.find('.rrs__handle').simulate('touchstart', {
         clientX: 50,
         clientY: 0,
         currentTarget: {},
@@ -129,7 +138,7 @@ describe('RangeSlider', () => {
         width: 200,
       });
 
-      wrapper.find('.rrs-track').simulate('click', {
+      wrapper.find('.rrs__track').simulate('click', {
         clientX: 100,
         clientY: 0,
         currentTarget: {},
@@ -139,6 +148,7 @@ describe('RangeSlider', () => {
         { x: 25, y: 0 },
         {
           axis: 'x',
+          classNamePrefix: 'rrs',
           onChange: expect.any(Function),
           onDragEnd: expect.any(Function),
           x: 0,
