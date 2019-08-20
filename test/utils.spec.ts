@@ -1,4 +1,4 @@
-import { getCoordinates, getValues, round } from '../src/utils';
+import { getCoordinates, getValues, num, round } from '../src/utils';
 
 describe('utils', () => {
   describe('getCoordinates', () => {
@@ -52,6 +52,13 @@ describe('utils', () => {
         x: 100,
         y: 100,
       });
+    });
+  });
+
+  describe('num', () => {
+    it('should return a number', () => {
+      expect(num(5)).toBe(5);
+      expect(num('5')).toBe(5);
     });
   });
 

@@ -1,16 +1,16 @@
-import React from 'react';
+import * as React from 'react';
 
-export interface RangeSliderPosition {
+export interface IRangeSliderPosition {
   x: number;
   y: number;
 }
 
-export interface RangeSliderSize {
+export interface IRangeSliderSize {
   height?: string;
   width?: string;
 }
 
-export interface RangeSliderStylesOptions {
+export interface IRangeSliderStylesOptions {
   handleBorder: string | number;
   handleBorderRadius: string | number;
   handleBorderRadiusXY: string | number;
@@ -26,7 +26,7 @@ export interface RangeSliderStylesOptions {
   width: string | number;
 }
 
-export interface RangeSliderStyles {
+export interface IRangeSliderStyles {
   handleWrapper: React.CSSProperties;
   handleX: React.CSSProperties;
   handleXY: React.CSSProperties;
@@ -42,16 +42,16 @@ export interface RangeSliderStyles {
   trackY: React.CSSProperties;
 }
 
-export interface RangeSliderStylesProp extends Partial<RangeSliderStyles> {
-  options?: Partial<RangeSliderStylesOptions>;
+export interface IRangeSliderStylesProp extends Partial<IRangeSliderStyles> {
+  options?: Partial<IRangeSliderStylesOptions>;
 }
 
-export interface RangeSliderProps {
+export interface IRangeSliderProps {
   axis?: string;
   classNamePrefix?: string;
-  onChange: (position: RangeSliderPosition, props: object) => void;
-  onDragEnd?: (position: RangeSliderPosition, props: object) => void;
-  styles?: RangeSliderStylesProp;
+  onChange: (position: IRangeSliderPosition, props: object) => void;
+  onDragEnd?: (position: IRangeSliderPosition, props: object) => void;
+  styles?: IRangeSliderStylesProp;
   x?: number;
   xMax?: number;
   xMin?: number;

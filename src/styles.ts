@@ -1,6 +1,7 @@
-import deepmerge from 'deepmerge';
+import * as deepmerge from 'deepmerge';
+import { num } from './utils';
 
-import { RangeSliderStyles, RangeSliderStylesProp, RangeSliderStylesOptions } from './types';
+import { IRangeSliderStyles, IRangeSliderStylesProp, IRangeSliderStylesOptions } from './types';
 
 const defaultOptions = {
   handleBorder: '2px solid #000',
@@ -18,18 +19,10 @@ const defaultOptions = {
   width: '20px',
 };
 
-function num(value: string | number): number {
-  if (typeof value === 'number') {
-    return value;
-  }
-
-  return parseInt(value, 10);
-}
-
-export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderStyles {
-  const options: RangeSliderStylesOptions = deepmerge(
+export default function getStyles(styles?: IRangeSliderStylesProp): IRangeSliderStyles {
+  const options: IRangeSliderStylesOptions = deepmerge(
     defaultOptions,
-    styles ? (styles.options as RangeSliderStylesOptions) : {},
+    styles ? (styles.options as IRangeSliderStylesOptions) : {},
   );
 
   const slider = {
@@ -147,5 +140,5 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
     },
   };
 
-  return deepmerge(defaultStyles, styles || {}) as RangeSliderStyles;
+  return deepmerge(defaultStyles, styles || {}) as IRangeSliderStyles;
 }

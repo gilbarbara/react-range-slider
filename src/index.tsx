@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 // @ts-ignore
-import blacklist from 'blacklist';
+import * as blacklist from 'blacklist';
 
-import { RangeSliderPosition, RangeSliderProps, RangeSliderSize } from './types';
+import { IRangeSliderPosition, IRangeSliderProps, IRangeSliderSize } from './types';
 import getStyles from './styles';
 import { getCoordinates, getValues } from './utils';
 
-class RangeSlider extends Component<RangeSliderProps> {
+class RangeSlider extends React.Component<IRangeSliderProps> {
   private handle: HTMLElement | null = null;
   private node: HTMLElement | null = null;
   private offset: { x: number; y: number } = { x: 0, y: 0 };
   private start: { x: number; y: number } = { x: 0, y: 0 };
   private track: HTMLElement | null = null;
 
-  public static defaultProps: Partial<RangeSliderProps> = {
+  public static defaultProps: Partial<IRangeSliderProps> = {
     axis: 'x',
     x: 0,
     xMax: 100,
@@ -84,10 +84,11 @@ class RangeSlider extends Component<RangeSliderProps> {
     this.offset = { x, y };
   };
 
-  private updatePosition = (position: RangeSliderPosition) => {
+  private updatePosition = (position: IRangeSliderPosition) => {
     const { onChange } = this.props;
     let rect: ClientRect;
 
+    /* istanbul ignore else */
     if (this.node) {
       rect = this.node.getBoundingClientRect();
     }
@@ -120,6 +121,7 @@ class RangeSlider extends Component<RangeSliderProps> {
     const { onDragEnd } = this.props;
     let rect: ClientRect;
 
+    /* istanbul ignore else */
     if (this.node) {
       rect = this.node.getBoundingClientRect();
     }
@@ -174,7 +176,7 @@ class RangeSlider extends Component<RangeSliderProps> {
     );
     const { x, y } = this.position;
     const position = { left: `${x}%`, bottom: `${y}%` };
-    const size: RangeSliderSize = {};
+    const size: IRangeSliderSize = {};
     let slider;
     let range;
     let track;

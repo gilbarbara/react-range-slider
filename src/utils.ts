@@ -1,4 +1,4 @@
-import { RangeSliderPosition, RangeSliderProps } from './types';
+import { IRangeSliderPosition, IRangeSliderProps } from './types';
 
 export function getCoordinates(e: MouseEvent | TouchEvent) {
   if (e instanceof TouchEvent) {
@@ -17,8 +17,8 @@ export function getCoordinates(e: MouseEvent | TouchEvent) {
 }
 
 export function getValues(
-  position: RangeSliderPosition,
-  props: RangeSliderProps,
+  position: IRangeSliderPosition,
+  props: IRangeSliderProps,
   rect: ClientRect,
 ) {
   const { axis, xMax, xMin, xStep, yMax, yMin, yStep } = props;
@@ -52,6 +52,14 @@ export function getValues(
     x: round(dx, xStep!),
     y: round(dy, yStep!),
   };
+}
+
+export function num(value: string | number): number {
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  return parseInt(value, 10);
 }
 
 export function round(value: number, increment: number): number {
