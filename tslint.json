@@ -1,7 +1,6 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier", "tslint-plugin-prettier"],
   "rules": {
-    "interface-name": [true, "never-prefix"],
     "member-ordering": [
       true,
       {
@@ -21,6 +20,7 @@
         ]
       }
     ],
+    "prettier": true,
     "ordered-imports": false,
     "quotemark": false
   }

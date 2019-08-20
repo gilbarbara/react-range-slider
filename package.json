@@ -33,48 +33,39 @@
     "deepmerge": "^4.0.0"
   },
   "devDependencies": {
-    "@types/exenv": "^1.2.0",
-    "@types/node": "^12.6.2",
+    "@gilbarbara/tsconfig": "^0.1.0",
+    "@size-limit/preset-small-lib": "^2.1.1",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.2",
     "@types/once": "^1.4.0",
-    "@types/react": "^16.8.23",
-    "@types/react-dom": "^16.8.4",
-    "bundlesize": "^0.18.0",
-    "chalk": "^2.4.2",
-    "cross-env": "^5.2.0",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "exenv": "^1.2.2",
-    "husky": "^3.0.0",
+    "husky": "^3.0.4",
     "is-ci-cli": "^1.1.1",
-    "jest": "^24.8.0",
-    "jest-chain": "^1.1.2",
-    "jest-enzyme": "^7.0.2",
+    "jest": "^24.9.0",
+    "jest-enzyme": "^7.1.0",
     "jest-extended": "^0.11.2",
     "jest-watch-typeahead": "^0.3.1",
-    "node-fetch": "^2.6.0",
-    "nodemon": "^1.19.1",
     "prettier": "^1.18.2",
-    "react": "^16.8.3",
-    "react-addons-test-utils": "^15.6.2",
-    "react-dom": "^16.8.3",
-    "react-test-renderer": "^16.8.6",
-    "rimraf": "^2.6.3",
-    "serve": "^11.1.0",
-    "start-server-and-test": "^1.9.1",
-    "styled-components": "^4.3.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "repo-tools": "^0.2.0",
+    "rimraf": "^3.0.0",
+    "size-limit": "^2.1.1",
     "ts-jest": "^24.0.2",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
     "tslint-react": "^4.0.0",
-    "typescript": "^3.5.3",
-    "yargs": "^13.2.4"
+    "typescript": "^3.5.3"
   },
   "scripts": {
     "build": "npm run clean && npm run build:ts",
-    "build:ts": "tsc --outDir lib",
+    "build:ts": "tsc",
     "watch": "npm run build:ts -- -w",
     "clean": "rimraf lib",
     "test": "is-ci \"test:coverage\" \"test:watch\"",
@@ -82,8 +73,8 @@
     "test:watch": "jest --watch --verbose",
     "lint": "tslint 'src/**/*.ts?(x)' 'test/**/*.ts?(x)'",
     "format": "prettier \"**/*.{js,jsx,json,yml,yaml,css,less,scss,ts,tsx,md,graphql,mdx}\" --write",
-    "validate": "npm run lint && npm run test:coverage && npm run build && npm run bundlesize",
-    "bundlesize": "bundlesize",
+    "validate": "npm run lint && npm run test:coverage && npm run size",
+    "size": "npm run build && size-limit",
     "prepublishOnly": "npm run validate"
   },
   "browserslist": [
@@ -97,16 +88,16 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
-  "bundlesize": [
+  "size-limit": [
     {
       "path": "./lib/index.js",
-      "maxSize": "5 kB"
+      "limit": "3 kB"
     }
   ],
   "husky": {
     "hooks": {
-      "post-merge": "node tools update",
-      "pre-commit": "node tools has-commits && npm run validate"
+      "post-merge": "repo-tools install-packages",
+      "pre-commit": "repo-tools check-remote && npm run validate"
     }
   }
 }
