@@ -1,6 +1,6 @@
 module.exports = {
   collectCoverage: false,
-  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}'],
   coverageThreshold: {
     global: {
       branches: 80,
@@ -10,15 +10,12 @@ module.exports = {
     },
   },
   moduleDirectories: ['node_modules', 'src', './'],
-  moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json'],
-  setupFiles: ['<rootDir>/test/__setup__/setupFiles.js'],
-  setupFilesAfterEnv: ['<rootDir>/test/__setup__/setupTests.js'],
-  testRegex: '/test/.*?\\.(test|spec)\\.jsx?$',
+  moduleFileExtensions: ['js', 'jx', 'json', 'ts', 'tsx'],
+  preset: 'ts-jest',
+  setupFiles: ['<rootDir>/test/__setup__/setupFiles.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test/__setup__/setupTests.ts'],
+  testRegex: '/test/.*?\\.(test|spec)\\.tsx?$',
   testURL: 'http://localhost:3000/',
-  transform: {
-    // '^.+\\.tsx?$': 'ts-jest',
-    '^.+\\.(t|j)sx?$': 'babel-jest',
-  },
   verbose: false,
   watchPlugins: ['jest-watch-typeahead/filename', 'jest-watch-typeahead/testname'],
 };

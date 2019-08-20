@@ -1,10 +1,12 @@
-import React from 'react';
+import * as React from 'react';
+import { mount, ReactWrapper } from 'enzyme';
+
 import RangeSlider from '../src';
 
 const mockOnChange = jest.fn();
 const mockOnDragEnd = jest.fn();
 
-function setup(axis = 'x') {
+function setup(axis = 'x'): ReactWrapper {
   return mount(
     <RangeSlider
       axis={axis}
@@ -17,11 +19,7 @@ function setup(axis = 'x') {
 
 describe('RangeSlider', () => {
   describe('with axis `x`', () => {
-    let wrapper;
-
-    beforeAll(() => {
-      wrapper = setup();
-    });
+    const wrapper = setup();
 
     it('should render properly', () => {
       expect(wrapper).toMatchSnapshot();
@@ -43,6 +41,7 @@ describe('RangeSlider', () => {
         currentTarget: {},
       });
 
+      // @ts-ignore
       expect(wrapper.instance().offset).toEqual({ x: 100, y: 0 });
     });
 
@@ -125,6 +124,7 @@ describe('RangeSlider', () => {
         currentTarget: {},
       });
 
+      // @ts-ignore
       expect(wrapper.instance().offset).toEqual({ x: 50, y: 0 });
     });
 
@@ -165,11 +165,7 @@ describe('RangeSlider', () => {
   });
 
   describe('with axis `xy`', () => {
-    let wrapper;
-
-    beforeAll(() => {
-      wrapper = setup('xy');
-    });
+    const wrapper = setup('xy');
 
     it('should render properly', () => {
       expect(wrapper).toMatchSnapshot();
@@ -177,11 +173,7 @@ describe('RangeSlider', () => {
   });
 
   describe('with axis `y`', () => {
-    let wrapper;
-
-    beforeAll(() => {
-      wrapper = setup('y');
-    });
+    const wrapper = setup('y');
 
     it('should render properly', () => {
       expect(wrapper).toMatchSnapshot();
