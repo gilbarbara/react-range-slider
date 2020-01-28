@@ -18,7 +18,7 @@ describe('utils', () => {
 
   describe('getValues', () => {
     const props = {
-      axis: 'x',
+      axis: 'x' as const,
       onChange: () => undefined,
       x: 10,
       xMax: 100,

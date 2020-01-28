@@ -6,7 +6,7 @@ import RangeSlider from '../src';
 const mockOnChange = jest.fn();
 const mockOnDragEnd = jest.fn();
 
-function setup(axis = 'x'): ReactWrapper {
+function setup(axis: 'x' | 'y' | 'xy' = 'x'): ReactWrapper {
   return mount(
     <RangeSlider
       axis={axis}
@@ -19,13 +19,14 @@ function setup(axis = 'x'): ReactWrapper {
 
 describe('RangeSlider', () => {
   describe('with axis `x`', () => {
-    const wrapper = setup();
+    const wrapper = setup('x' as const);
 
     it('should render properly', () => {
       expect(wrapper).toMatchSnapshot();
     });
 
     it('should handle mousedown on the handle', () => {
+      // @ts-ignore
       Element.prototype.getBoundingClientRect = () => ({
         bottom: 0,
         height: 20,
@@ -46,6 +47,7 @@ describe('RangeSlider', () => {
     });
 
     it('should handle mousemove', () => {
+      // @ts-ignore
       Element.prototype.getBoundingClientRect = () => ({
         bottom: 0,
         height: 20,
@@ -109,6 +111,7 @@ describe('RangeSlider', () => {
     });
 
     it('should handle touchstart on the handle', () => {
+      // @ts-ignore
       Element.prototype.getBoundingClientRect = () => ({
         bottom: 0,
         height: 20,
@@ -129,6 +132,7 @@ describe('RangeSlider', () => {
     });
 
     it('should handle clicks on the track', () => {
+      // @ts-ignore
       Element.prototype.getBoundingClientRect = () => ({
         bottom: 0,
         height: 20,

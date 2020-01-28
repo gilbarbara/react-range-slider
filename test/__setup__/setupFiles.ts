@@ -1,8 +1,7 @@
-/* tslint:disable:no-console */
-declare var window: any;
-
 import { configure } from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
+
+declare let window: any;
 
 configure({ adapter: new Adapter() });
 

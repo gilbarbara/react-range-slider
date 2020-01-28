@@ -11,7 +11,7 @@ Before submitting a new pull request, open a new issue to discuss it. It may alr
 In any case:
 
 - Format files using these rules [EditorConfig](https://github.com/gilbarbara/react-range-slider/blob/master/.editorconfig)
-- Follow the [Typescript](https://github.com/gilbarbara/react-range-slider/blob/master/tslint.json) (TSLint) styleguide.
+- Follow the [ESLint](https://github.com/gilbarbara/react-range-slider/blob/master/.eslintrc) styleguide.
 
 Thank you!
 
