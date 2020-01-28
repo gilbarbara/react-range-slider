@@ -1,19 +1,17 @@
 import * as React from 'react';
-// @ts-ignore
-import * as blacklist from 'blacklist';
 
-import { IRangeSliderPosition, IRangeSliderProps, IRangeSliderSize } from './types';
+import { RangeSliderPosition, RangeSliderProps, RangeSliderSize } from './types';
 import getStyles from './styles';
-import { getCoordinates, getValues } from './utils';
+import { blacklist, getCoordinates, getValues } from './utils';
 
-class RangeSlider extends React.Component<IRangeSliderProps> {
+class RangeSlider extends React.Component<RangeSliderProps> {
   private handle: HTMLElement | null = null;
   private node: HTMLElement | null = null;
   private offset: { x: number; y: number } = { x: 0, y: 0 };
   private start: { x: number; y: number } = { x: 0, y: 0 };
   private track: HTMLElement | null = null;
 
-  public static defaultProps: Partial<IRangeSliderProps> = {
+  public static defaultProps: Partial<RangeSliderProps> = {
     axis: 'x',
     x: 0,
     xMax: 100,
@@ -84,7 +82,7 @@ class RangeSlider extends React.Component<IRangeSliderProps> {
     this.offset = { x, y };
   };
 
-  private updatePosition = (position: IRangeSliderPosition) => {
+  private updatePosition = (position: RangeSliderPosition) => {
     const { onChange } = this.props;
     let rect: ClientRect;
 
@@ -157,35 +155,39 @@ class RangeSlider extends React.Component<IRangeSliderProps> {
   };
 
   public render() {
-    const { axis, classNamePrefix } = this.props;
-    const rest = blacklist(
-      this.props,
+    const { axis = 'x', classNamePrefix, x, xMin, xMax, y, yMin, yMax } = this.props;
+    const rest = blacklist(this.props, [
       'axis',
       'classNamePrefix',
       'onChange',
       'onDragEnd',
       'styles',
       'x',
-      'xMax',
       'xMin',
+      'xMax',
       'xStep',
       'y',
-      'yMax',
       'yMin',
+      'yMax',
       'yStep',
-    );
-    const { x, y } = this.position;
-    const position = { left: `${x}%`, bottom: `${y}%` };
-    const size: IRangeSliderSize = {};
+    ]);
+    const { x: xPos, y: yPos } = this.position;
+    const position = { left: `${xPos}%`, bottom: `${yPos}%` };
+    const size: RangeSliderSize = {};
     let slider;
     let range;
     let track;
     let handle;
+    let orientation: 'horizontal' | 'vertical' | undefined;
+    let valuemax = xMax;
+    let valuemin = xMin;
+    let valuenow = x;
 
     /* istanbul ignore else */
     if (axis! === 'x') {
-      size.width = `${x}%`;
+      size.width = `${xPos}%`;
       slider = this.styles.sliderX;
+      orientation = 'horizontal';
       range = this.styles.rangeX;
       track = this.styles.trackX;
       handle = this.styles.handleX;
@@ -193,17 +195,21 @@ class RangeSlider extends React.Component<IRangeSliderProps> {
 
     /* istanbul ignore else */
     if (axis! === 'y') {
-      size.height = `${y}%`;
+      size.height = `${yPos}%`;
       slider = this.styles.sliderY;
       range = this.styles.rangeY;
       track = this.styles.trackY;
       handle = this.styles.handleY;
+      orientation = 'vertical';
+      valuemax = yMax;
+      valuemin = yMin;
+      valuenow = y;
     }
 
     /* istanbul ignore else */
     if (axis! === 'xy') {
-      size.height = `${y}%`;
-      size.width = `${x}%`;
+      size.height = `${yPos}%`;
+      size.width = `${xPos}%`;
       slider = this.styles.sliderXY;
       range = this.styles.rangeXY;
       track = this.styles.trackXY;
@@ -216,6 +222,7 @@ class RangeSlider extends React.Component<IRangeSliderProps> {
           className={classNamePrefix && `${classNamePrefix}__track`}
           ref={c => (this.track = c)}
           style={track}
+          role="presentation"
           // @ts-ignore
           onClick={this.handleClickTrack}
         >
@@ -226,12 +233,23 @@ class RangeSlider extends React.Component<IRangeSliderProps> {
           <div
             ref={c => (this.handle = c)}
             style={{ ...this.styles.handleWrapper, ...position }}
+            role="presentation"
             // @ts-ignore
             onTouchStart={this.handleTouchStart}
             // @ts-ignore
             onMouseDown={this.handleMouseDown}
           >
-            <span className={classNamePrefix && `${classNamePrefix}__handle`} style={handle} />
+            <span
+              className={classNamePrefix && `${classNamePrefix}__handle`}
+              style={handle}
+              tabIndex={0}
+              role="slider"
+              aria-label="slider handle"
+              aria-orientation={orientation}
+              aria-valuemin={valuemin}
+              aria-valuenow={valuenow}
+              aria-valuemax={valuemax}
+            />
           </div>
         </div>
       </div>

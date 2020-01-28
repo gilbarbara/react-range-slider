@@ -31,6 +31,7 @@ exports[`RangeSlider with axis \`x\` should render properly 1`] = `
     <div
       className="rrs__track"
       onClick={[Function]}
+      role="presentation"
       style={
         Object {
           "backgroundColor": "#ccc",
@@ -58,6 +59,7 @@ exports[`RangeSlider with axis \`x\` should render properly 1`] = `
       <div
         onMouseDown={[Function]}
         onTouchStart={[Function]}
+        role="presentation"
         style={
           Object {
             "bottom": "0%",
@@ -71,7 +73,13 @@ exports[`RangeSlider with axis \`x\` should render properly 1`] = `
         }
       >
         <span
+          aria-label="slider handle"
+          aria-orientation="horizontal"
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={0}
           className="rrs__handle"
+          role="slider"
           style={
             Object {
               "backgroundColor": "#fff",
@@ -87,6 +95,7 @@ exports[`RangeSlider with axis \`x\` should render properly 1`] = `
               "width": "10px",
             }
           }
+          tabIndex={0}
         />
       </div>
     </div>
@@ -302,6 +311,7 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
     <div
       className="rrs__track"
       onClick={[Function]}
+      role="presentation"
       style={
         Object {
           "backgroundColor": "#ccc",
@@ -330,6 +340,7 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
       <div
         onMouseDown={[Function]}
         onTouchStart={[Function]}
+        role="presentation"
         style={
           Object {
             "bottom": "0%",
@@ -343,7 +354,12 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
         }
       >
         <span
+          aria-label="slider handle"
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={0}
           className="rrs__handle"
+          role="slider"
           style={
             Object {
               "backgroundColor": "transparent",
@@ -359,6 +375,7 @@ exports[`RangeSlider with axis \`xy\` should render properly 1`] = `
               "width": "20px",
             }
           }
+          tabIndex={0}
         />
       </div>
     </div>
@@ -574,6 +591,7 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
     <div
       className="rrs__track"
       onClick={[Function]}
+      role="presentation"
       style={
         Object {
           "backgroundColor": "#ccc",
@@ -603,6 +621,7 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
       <div
         onMouseDown={[Function]}
         onTouchStart={[Function]}
+        role="presentation"
         style={
           Object {
             "bottom": "0%",
@@ -616,7 +635,13 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
         }
       >
         <span
+          aria-label="slider handle"
+          aria-orientation="vertical"
+          aria-valuemax={100}
+          aria-valuemin={0}
+          aria-valuenow={0}
           className="rrs__handle"
+          role="slider"
           style={
             Object {
               "backgroundColor": "#fff",
@@ -632,6 +657,7 @@ exports[`RangeSlider with axis \`y\` should render properly 1`] = `
               "width": 26,
             }
           }
+          tabIndex={0}
         />
       </div>
     </div>

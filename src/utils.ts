@@ -1,8 +1,27 @@
-import { IRangeSliderPosition, IRangeSliderProps } from './types';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import { PlainObject, RangeSliderPosition, RangeSliderProps } from './types';
+
+/**
+ * Remove properties from an object.
+ */
+export function blacklist(input: PlainObject, exclude: string | Array<string>): PlainObject {
+  const output: PlainObject = {};
+  const filter = Array.isArray(exclude) ? exclude : [exclude];
+
+  for (const key in input) {
+    if ({}.hasOwnProperty.call(input, key)) {
+      if (!filter.includes(key)) {
+        output[key] = input[key];
+      }
+    }
+  }
+
+  return output;
+}
 
 export function getCoordinates(e: MouseEvent | TouchEvent) {
   if (e instanceof TouchEvent) {
-    const [touch] = e.touches;
+    const touch = e.touches[0];
 
     return {
       x: touch.clientX,
@@ -10,6 +29,7 @@ export function getCoordinates(e: MouseEvent | TouchEvent) {
     };
   }
 
+  // @ts-ignore
   return {
     x: e.clientX,
     y: e.clientY,
@@ -17,8 +37,8 @@ export function getCoordinates(e: MouseEvent | TouchEvent) {
 }
 
 export function getValues(
-  position: IRangeSliderPosition,
-  props: IRangeSliderProps,
+  position: RangeSliderPosition,
+  props: RangeSliderProps,
   rect: ClientRect,
 ) {
   const { axis, xMax, xMin, xStep, yMax, yMin, yStep } = props;
