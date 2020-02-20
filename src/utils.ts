@@ -9,6 +9,7 @@ export function blacklist(input: PlainObject, exclude: string | Array<string>): 
   const filter = Array.isArray(exclude) ? exclude : [exclude];
 
   for (const key in input) {
+    /* istanbul ignore else */
     if ({}.hasOwnProperty.call(input, key)) {
       if (!filter.includes(key)) {
         output[key] = input[key];
@@ -37,7 +38,7 @@ export function getCoordinates(e: MouseEvent | TouchEvent) {
   };
 }
 
-export function getValues(
+export function getPosition(
   position: RangeSliderPosition,
   props: RangeSliderProps,
   rect: ClientRect,
@@ -73,6 +74,24 @@ export function getValues(
     x: round(dx, xStep!),
     y: round(dy, yStep!),
   };
+}
+
+export function getNormalizedValue(name: 'x' | 'y', props: RangeSliderProps) {
+  const value = props[name] || 0;
+
+  if (value < props[`${name}Min`]) {
+    return props[`${name}Min`];
+  }
+
+  if (value > props[`${name}Max`]) {
+    return props[`${name}Max`];
+  }
+
+  return value;
+}
+
+export function isUndefined(value: unknown): value is undefined {
+  return typeof value === 'undefined';
 }
 
 export function num(value: string | number): number {
