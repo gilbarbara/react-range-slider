@@ -125,6 +125,10 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     this.setState(getPosition(position, this.props, rect! || {}));
   };
 
+  private handleBlur = () => {
+    document.removeEventListener('keydown', this.handleKeydown);
+  };
+
   private handleClickTrack = (e: MouseEvent | TouchEvent) => {
     const element = e.currentTarget as Element;
     const { x, y } = getCoordinates(e);
@@ -165,6 +169,69 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
         getPosition(this.getDragPosition(getCoordinates(e)), this.props, rect! || {}),
         this.props,
       );
+    }
+  };
+
+  private handleFocus = () => {
+    document.addEventListener('keydown', this.handleKeydown, { passive: false });
+  };
+
+  private handleKeydown = (e: KeyboardEvent) => {
+    const { x: innerX, y: innerY } = this.state;
+    const { axis, x, xMax, xMin, xStep, y, yMax, yMin, yStep } = this.props;
+    const codes = { down: 'ArrowDown', left: 'ArrowLeft', up: 'ArrowUp', right: 'ArrowRight' };
+
+    /* istanbul ignore else */
+    if (Object.values(codes).indexOf(e.code) > -1) {
+      e.preventDefault();
+
+      const position = {
+        x: isUndefined(x) ? innerX : getNormalizedValue('x', this.props),
+        y: isUndefined(y) ? innerY : getNormalizedValue('y', this.props),
+      };
+      const xMinus = position.x - xStep! <= xMin! ? xMin! : position.x - xStep!;
+      const xPlus = position.x + xStep! >= xMax! ? xMax! : position.x + xStep!;
+      const yMinus = position.y - yStep! <= yMin! ? yMin! : position.y - yStep!;
+      const yPlus = position.y + yStep! >= yMax! ? yMax! : position.y + yStep!;
+
+      switch (e.code) {
+        case codes.up: {
+          if (axis === 'x') {
+            position.x = xPlus;
+          } else {
+            position.y = yPlus;
+          }
+          break;
+        }
+        case codes.down: {
+          if (axis === 'x') {
+            position.x = xMinus;
+          } else {
+            position.y = yMinus;
+          }
+
+          break;
+        }
+        case codes.left: {
+          if (axis === 'y') {
+            position.y = yMinus;
+          } else {
+            position.x = xMinus;
+          }
+          break;
+        }
+        case codes.right:
+        default: {
+          if (axis === 'y') {
+            position.y = yPlus;
+          } else {
+            position.x = xPlus;
+          }
+          break;
+        }
+      }
+
+      this.setState(position);
     }
   };
 
@@ -273,6 +340,8 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
           >
             <span
               className={classNamePrefix && `${classNamePrefix}__handle`}
+              onBlur={this.handleBlur}
+              onFocus={this.handleFocus}
               style={handle}
               tabIndex={0}
               role="slider"
