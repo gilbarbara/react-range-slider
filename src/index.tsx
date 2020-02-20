@@ -1,32 +1,50 @@
 import * as React from 'react';
 
-import { RangeSliderPosition, RangeSliderProps, RangeSliderSize } from './types';
+import { RangeSliderPosition, RangeSliderProps, RangeSliderSize, RangeSliderState } from './types';
 import getStyles from './styles';
-import { blacklist, getCoordinates, getValues } from './utils';
+import { blacklist, getCoordinates, getNormalizedValue, getPosition, isUndefined } from './utils';
 
-class RangeSlider extends React.Component<RangeSliderProps> {
+class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   private handle: HTMLElement | null = null;
   private node: HTMLElement | null = null;
   private offset: { x: number; y: number } = { x: 0, y: 0 };
   private start: { x: number; y: number } = { x: 0, y: 0 };
   private track: HTMLElement | null = null;
 
+  constructor(props: RangeSliderProps) {
+    super(props);
+
+    this.state = {
+      x: getNormalizedValue('x', props),
+      y: getNormalizedValue('y', props),
+    };
+  }
+
   public static defaultProps: Partial<RangeSliderProps> = {
     axis: 'x',
-    x: 0,
     xMax: 100,
     xMin: 0,
     xStep: 1,
-    y: 0,
     yMax: 100,
     yMin: 0,
     yStep: 1,
   };
 
+  componentDidUpdate(_: any, prevState: RangeSliderState) {
+    const { x, y } = this.state;
+    const { onChange } = this.props;
+    const { x: prevX, y: prevY } = prevState;
+
+    /* istanbul ignore else */
+    if (onChange && (x !== prevX || y !== prevY)) {
+      onChange(this.state, this.props);
+    }
+  }
+
   private get position() {
-    const { axis, x, xMax, xMin, y, yMax, yMin } = this.props;
-    let bottom: number = ((y! - yMin!) / (yMax! - yMin!)) * 100;
-    let left: number = ((x! - xMin!) / (xMax! - xMin!)) * 100;
+    const { axis, xMax, xMin, yMax, yMin } = this.props;
+    let bottom: number = ((this.y - yMin!) / (yMax! - yMin!)) * 100;
+    let left: number = ((this.x - xMin!) / (xMax! - xMin!)) * 100;
 
     if (bottom > 100) {
       bottom = 100;
@@ -61,8 +79,22 @@ class RangeSlider extends React.Component<RangeSliderProps> {
     return getStyles(styles);
   }
 
-  private getDragPosition = (e: MouseEvent | TouchEvent) => {
-    const { x, y } = getCoordinates(e);
+  private get x() {
+    const { x: innerX } = this.state;
+    const { x } = this.props;
+
+    return isUndefined(x) ? innerX : x;
+  }
+
+  private get y() {
+    const { y: innerY } = this.state;
+    const { y } = this.props;
+
+    return isUndefined(y) ? innerY : y;
+  }
+
+  private getDragPosition = (data: RangeSliderPosition) => {
+    const { x, y } = data;
 
     return {
       x: x + this.start.x - this.offset.x,
@@ -70,9 +102,9 @@ class RangeSlider extends React.Component<RangeSliderProps> {
     };
   };
 
-  private updateOptions = (e: MouseEvent | TouchEvent) => {
+  private updateOptions = (data: RangeSliderPosition) => {
     const { handle, track } = this;
-    const { x, y } = getCoordinates(e);
+    const { x, y } = data;
 
     this.start = {
       x: handle!.offsetLeft,
@@ -83,7 +115,6 @@ class RangeSlider extends React.Component<RangeSliderProps> {
   };
 
   private updatePosition = (position: RangeSliderPosition) => {
-    const { onChange } = this.props;
     let rect: ClientRect;
 
     /* istanbul ignore else */
@@ -91,10 +122,7 @@ class RangeSlider extends React.Component<RangeSliderProps> {
       rect = this.node.getBoundingClientRect();
     }
 
-    /* istanbul ignore else */
-    if (onChange) {
-      onChange(getValues(position, this.props, rect! || {}), this.props);
-    }
+    this.setState(getPosition(position, this.props, rect! || {}));
   };
 
   private handleClickTrack = (e: MouseEvent | TouchEvent) => {
@@ -111,7 +139,7 @@ class RangeSlider extends React.Component<RangeSliderProps> {
   private handleDrag = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
 
-    this.updatePosition(this.getDragPosition(e));
+    this.updatePosition(this.getDragPosition(getCoordinates(e)));
   };
 
   private handleDragEnd = (e: MouseEvent | TouchEvent) => {
@@ -133,13 +161,16 @@ class RangeSlider extends React.Component<RangeSliderProps> {
 
     /* istanbul ignore else */
     if (onDragEnd) {
-      onDragEnd(getValues(this.getDragPosition(e), this.props, rect! || {}), this.props);
+      onDragEnd(
+        getPosition(this.getDragPosition(getCoordinates(e)), this.props, rect! || {}),
+        this.props,
+      );
     }
   };
 
   private handleMouseDown = (e: MouseEvent) => {
     e.preventDefault();
-    this.updateOptions(e);
+    this.updateOptions(getCoordinates(e));
 
     document.addEventListener('mousemove', this.handleDrag);
     document.addEventListener('mouseup', this.handleDragEnd);
@@ -147,15 +178,16 @@ class RangeSlider extends React.Component<RangeSliderProps> {
 
   private handleTouchStart = (e: TouchEvent) => {
     e.preventDefault();
-    this.updateOptions(e);
+
+    this.updateOptions(getCoordinates(e));
 
     document.addEventListener('touchmove', this.handleDrag, { passive: false });
-    document.addEventListener('touchend', this.handleDragEnd);
-    document.addEventListener('touchcancel', this.handleDragEnd);
+    document.addEventListener('touchend', this.handleDragEnd, { passive: false });
+    document.addEventListener('touchcancel', this.handleDragEnd, { passive: false });
   };
 
   public render() {
-    const { axis = 'x', classNamePrefix, x, xMin, xMax, y, yMin, yMax } = this.props;
+    const { axis, classNamePrefix, xMin, xMax, yMin, yMax } = this.props;
     const rest = blacklist(this.props, [
       'axis',
       'classNamePrefix',
@@ -181,7 +213,7 @@ class RangeSlider extends React.Component<RangeSliderProps> {
     let orientation: 'horizontal' | 'vertical' | undefined;
     let valuemax = xMax;
     let valuemin = xMin;
-    let valuenow = x;
+    let valuenow = this.x;
 
     /* istanbul ignore else */
     if (axis! === 'x') {
@@ -203,7 +235,7 @@ class RangeSlider extends React.Component<RangeSliderProps> {
       orientation = 'vertical';
       valuemax = yMax;
       valuemin = yMin;
-      valuenow = y;
+      valuenow = this.y;
     }
 
     /* istanbul ignore else */

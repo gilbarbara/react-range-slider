@@ -50,10 +50,12 @@ export interface RangeSliderStylesProp extends Partial<RangeSliderStyles> {
   options?: Partial<RangeSliderStylesOptions>;
 }
 
+export type RangeSliderState = RangeSliderPosition;
+
 export interface RangeSliderProps {
   axis?: 'x' | 'y' | 'xy';
   classNamePrefix?: string;
-  onChange: (position: RangeSliderPosition, props: object) => void;
+  onChange?: (position: RangeSliderPosition, props: object) => void;
   onDragEnd?: (position: RangeSliderPosition, props: object) => void;
   styles?: RangeSliderStylesProp;
   x?: number;
