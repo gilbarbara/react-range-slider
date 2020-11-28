@@ -20,7 +20,7 @@ export function blacklist(input: PlainObject, exclude: string | Array<string>): 
 }
 
 export function getCoordinates(e: MouseEvent | TouchEvent) {
-  if (e instanceof TouchEvent) {
+  if (window.TouchEvent && e instanceof TouchEvent) {
     const touch = e.touches[0];
 
     return {
@@ -29,9 +29,10 @@ export function getCoordinates(e: MouseEvent | TouchEvent) {
     };
   }
 
-  // @ts-ignore
   return {
+    // @ts-ignore clientX only exists on MouseEvent
     x: e.clientX,
+    // @ts-ignore clientY only exists on MouseEvent
     y: e.clientY,
   };
 }
