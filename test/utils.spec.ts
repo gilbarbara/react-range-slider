@@ -1,45 +1,64 @@
-import { getCoordinates, getNormalizedValue, getPosition, num, round } from '../src/utils';
+import {
+  getCoordinates,
+  getNormalizedValue,
+  getPosition,
+  isNumber,
+  isUndefined,
+  num,
+  removeProperties,
+  round,
+} from '../src/utils';
 
 describe('utils', () => {
   describe('getCoordinates', () => {
-    it('should return the event coordinates with MouseEvent', () => {
+    it('should return the event coordinates with click', () => {
       const event = new MouseEvent('click');
 
-      expect(getCoordinates(event)).toEqual({ x: 0, y: 0 });
+      expect(getCoordinates(event, { x: 10, y: 10 })).toEqual({ x: 0, y: 0 });
     });
 
-    it('should return the event coordinates with TouchEvent', () => {
+    it('should return the event coordinates with touchstart', () => {
       const event = new TouchEvent('touchstart', {
         touches: [{ clientX: 10, clientY: 100 } as Touch],
       });
 
-      expect(getCoordinates(event)).toEqual({ x: 10, y: 100 });
+      expect(getCoordinates(event, { x: 10, y: 10 })).toEqual({ x: 10, y: 100 });
+    });
+
+    it('should return the event coordinates with touchend', () => {
+      const event = new TouchEvent('touchstart', {
+        touches: [],
+      });
+
+      expect(getCoordinates(event, { x: 10, y: 10 })).toEqual({ x: 10, y: 10 });
     });
   });
 
   describe('getNormalizedValue', () => {
-    const props = {
-      x: 10,
-      xMax: 100,
-      xMin: 0,
-      y: 10,
-      yMax: 20,
-      yMin: -5,
-    };
+    it('should return properly', () => {
+      const props = {
+        x: 10,
+        xMax: 100,
+        xMin: 0,
+        y: 10,
+        yMax: 20,
+        yMin: -5,
+      };
 
-    expect(
-      getNormalizedValue('x', {
-        ...props,
-        x: 120,
-      }),
-    ).toBe(100);
+      expect(
+        getNormalizedValue('x', {
+          ...props,
+          x: 120,
+        }),
+      ).toBe(100);
 
-    expect(
-      getNormalizedValue('y', {
-        ...props,
-        y: -10,
-      }),
-    ).toBe(-5);
+      expect(
+        getNormalizedValue('y', {
+          ...props,
+          y: -10,
+        }),
+      ).toBe(-5);
+    });
   });
 
   describe('getPosition', () => {
@@ -81,10 +100,32 @@ describe('utils', () => {
     });
   });
 
+  describe('isNumber', () => {
+    it('should return properly', () => {
+      expect(isNumber(10)).toBe(true);
+      expect(isNumber('10')).toBe(false);
+    });
+  });
+
+  describe('isUndefined', () => {
+    it('should return properly', () => {
+      expect(isUndefined(undefined)).toBe(true);
+      expect(isUndefined('string')).toBe(false);
+    });
+  });
+
   describe('num', () => {
     it('should return a number', () => {
       expect(num(5)).toBe(5);
       expect(num('5')).toBe(5);
+    });
+  });
+
+  describe('removeProperties', () => {
+    it('should return properly', () => {
+      const obj = { a: 1, b: 2 };
+
+      expect(removeProperties(obj, 'b')).toEqual({ a: 1 });
     });
   });
 

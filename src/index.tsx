@@ -16,6 +16,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   private offset: { x: number; y: number } = { x: 0, y: 0 };
   private start: { x: number; y: number } = { x: 0, y: 0 };
   private track: HTMLElement | null = null;
+  private lastCoordinates = { x: 0, y: 0 };
 
   constructor(props: RangeSliderProps) {
     super(props);
@@ -116,7 +117,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
       x: handle!.offsetLeft,
       y: track!.offsetHeight - handle!.offsetTop - handle!.offsetHeight,
     };
-
+    this.lastCoordinates = { x, y };
     this.offset = { x, y };
   };
 
@@ -137,9 +138,10 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
 
   private handleClickTrack = (e: MouseEvent | TouchEvent) => {
     const element = e.currentTarget as Element;
-    const { x, y } = getCoordinates(e);
+    const { x, y } = getCoordinates(e, this.lastCoordinates);
     const { left, bottom } = element.getBoundingClientRect();
 
+    this.lastCoordinates = { x, y };
     this.updatePosition({
       x: x - left,
       y: bottom - y,
@@ -148,8 +150,10 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
 
   private handleDrag = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
+    const coordinates = getCoordinates(e, this.lastCoordinates);
 
-    this.updatePosition(this.getDragPosition(getCoordinates(e)));
+    this.updatePosition(this.getDragPosition(coordinates));
+    this.lastCoordinates = coordinates;
   };
 
   private handleDragEnd = (e: MouseEvent | TouchEvent) => {
@@ -172,7 +176,11 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     /* istanbul ignore else */
     if (onDragEnd) {
       onDragEnd(
-        getPosition(this.getDragPosition(getCoordinates(e)), this.props, rect! || {}),
+        getPosition(
+          this.getDragPosition(getCoordinates(e, this.lastCoordinates)),
+          this.props,
+          rect! || {},
+        ),
         this.props,
       );
     }
@@ -243,7 +251,8 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
 
   private handleMouseDown = (e: MouseEvent) => {
     e.preventDefault();
-    this.updateOptions(getCoordinates(e));
+
+    this.updateOptions(getCoordinates(e, this.lastCoordinates));
 
     document.addEventListener('mousemove', this.handleDrag);
     document.addEventListener('mouseup', this.handleDragEnd);
@@ -252,7 +261,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   private handleTouchStart = (e: TouchEvent) => {
     e.preventDefault();
 
-    this.updateOptions(getCoordinates(e));
+    this.updateOptions(getCoordinates(e, this.lastCoordinates));
 
     document.addEventListener('touchmove', this.handleDrag, { passive: false });
     document.addEventListener('touchend', this.handleDragEnd, { passive: false });

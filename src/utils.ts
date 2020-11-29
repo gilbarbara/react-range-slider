@@ -1,19 +1,20 @@
 import { PlainObject, RangeSliderPosition, RangeSliderProps } from './types';
 
-export function getCoordinates(e: MouseEvent | TouchEvent) {
-  if (window.TouchEvent && e instanceof TouchEvent) {
-    const touch = e.touches[0];
+export function getCoordinates(
+  e: MouseEvent | TouchEvent,
+  lastPosition: RangeSliderPosition,
+): RangeSliderPosition {
+  if ('touches' in e) {
+    const [touch] = e.touches;
 
     return {
-      x: touch.clientX,
-      y: touch.clientY,
+      x: touch ? touch.clientX : lastPosition.x,
+      y: touch ? touch.clientY : lastPosition.y,
     };
   }
 
   return {
-    // @ts-ignore clientX only exists on MouseEvent
     x: e.clientX,
-    // @ts-ignore clientY only exists on MouseEvent
     y: e.clientY,
   };
 }
