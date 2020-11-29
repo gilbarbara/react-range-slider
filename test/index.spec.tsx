@@ -1,186 +1,204 @@
 import * as React from 'react';
-import { mount, ReactWrapper } from 'enzyme';
 
-import RangeSlider from '../src';
+import { fireEvent, render } from '@testing-library/react';
+
+import RangeSlider, { RangeSliderProps } from '../src';
 
 const mockOnChange = jest.fn();
 const mockOnDragEnd = jest.fn();
 
-function setup(axis: 'x' | 'y' | 'xy' = 'x'): ReactWrapper {
-  return mount(
+function setup(axis = 'x') {
+  return render(
     <RangeSlider
-      axis={axis}
-      classNamePrefix="rrs"
+      axis={axis as RangeSliderProps['axis']}
       onChange={mockOnChange}
       onDragEnd={mockOnDragEnd}
+      className="test"
     />,
   );
 }
 
 describe('RangeSlider', () => {
-  describe('with axis `x`', () => {
-    const wrapper = setup('x' as const);
+  beforeAll(() => {
+    // @ts-ignore
+    Element.prototype.getBoundingClientRect = () => ({
+      bottom: 0,
+      height: 20,
+      left: 50,
+      right: 0,
+      top: 50,
+      width: 200,
+    });
+  });
 
+  afterEach(() => {
+    mockOnChange.mockClear();
+    mockOnDragEnd.mockClear();
+  });
+
+  describe('with `x` axis', () => {
     it('should render properly', () => {
-      expect(wrapper).toMatchSnapshot();
+      const { container } = setup();
+
+      expect(container.firstChild).toMatchSnapshot();
     });
 
-    it('should handle mousedown on the handle', () => {
-      // @ts-ignore
-      Element.prototype.getBoundingClientRect = () => ({
-        bottom: 0,
-        height: 20,
-        left: 50,
-        right: 0,
-        top: 50,
-        width: 200,
-      });
+    it('should handle mouse events', () => {
+      const { getByRole } = setup();
 
-      wrapper.find('.rrs__handle').simulate('mousedown', {
+      fireEvent.mouseDown(getByRole('slider'), {
         clientX: 100,
         clientY: 0,
         currentTarget: {},
       });
 
-      // @ts-ignore
-      expect(wrapper.instance().offset).toEqual({ x: 100, y: 0 });
-    });
-
-    it('should handle mousemove', () => {
-      // @ts-ignore
-      Element.prototype.getBoundingClientRect = () => ({
-        bottom: 0,
-        height: 20,
-        left: 50,
-        right: 0,
-        top: 50,
-        width: 200,
-      });
-
-      document.dispatchEvent(
-        new MouseEvent('mousemove', {
-          clientX: 230,
-          clientY: 0,
-        }),
-      );
-
-      expect(mockOnChange).toHaveBeenLastCalledWith(
-        { x: 65, y: 0 },
-        {
-          axis: 'x',
-          classNamePrefix: 'rrs',
-          onChange: expect.any(Function),
-          onDragEnd: expect.any(Function),
-          x: 0,
-          xMax: 100,
-          xMin: 0,
-          xStep: 1,
-          y: 0,
-          yMax: 100,
-          yMin: 0,
-          yStep: 1,
-        },
-      );
-    });
-
-    it('should handle mouseup', () => {
-      document.dispatchEvent(
-        new MouseEvent('mouseup', {
-          clientX: 230,
-          clientY: 0,
-        }),
-      );
-
-      expect(mockOnDragEnd).toHaveBeenLastCalledWith(
-        { x: 65, y: 0 },
-        {
-          axis: 'x',
-          classNamePrefix: 'rrs',
-          onChange: expect.any(Function),
-          onDragEnd: expect.any(Function),
-          x: 0,
-          xMax: 100,
-          xMin: 0,
-          xStep: 1,
-          y: 0,
-          yMax: 100,
-          yMin: 0,
-          yStep: 1,
-        },
-      );
-    });
-
-    it('should handle touchstart on the handle', () => {
-      // @ts-ignore
-      Element.prototype.getBoundingClientRect = () => ({
-        bottom: 0,
-        height: 20,
-        left: 50,
-        right: 0,
-        top: 50,
-        width: 200,
-      });
-
-      wrapper.find('.rrs__handle').simulate('touchstart', {
-        clientX: 50,
+      fireEvent.mouseMove(document, {
+        clientX: 230,
         clientY: 0,
         currentTarget: {},
       });
 
-      // @ts-ignore
-      expect(wrapper.instance().offset).toEqual({ x: 50, y: 0 });
+      fireEvent.mouseUp(document, {
+        clientX: 230,
+        clientY: 0,
+        currentTarget: {},
+      });
+
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 65, y: 0 }, expect.any(Object));
+      expect(mockOnDragEnd).toHaveBeenLastCalledWith({ x: 65, y: 0 }, expect.any(Object));
+      expect(getByRole('slider')).toMatchSnapshot();
+    });
+
+    it('should handle touch events', () => {
+      const { getByRole } = setup();
+
+      fireEvent.touchStart(getByRole('slider'), {
+        touches: [
+          {
+            clientX: 100,
+            clientY: 0,
+          },
+        ],
+        currentTarget: {},
+      });
+
+      fireEvent.touchMove(document, {
+        touches: [
+          {
+            clientX: 150,
+            clientY: 0,
+          },
+        ],
+        currentTarget: {},
+      });
+
+      fireEvent.touchEnd(document, {
+        touches: [],
+        currentTarget: {},
+      });
+
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 25, y: 0 }, expect.any(Object));
+      expect(mockOnDragEnd).toHaveBeenLastCalledWith({ x: 25, y: 0 }, expect.any(Object));
+      expect(getByRole('slider')).toMatchSnapshot();
     });
 
     it('should handle clicks on the track', () => {
-      // @ts-ignore
-      Element.prototype.getBoundingClientRect = () => ({
-        bottom: 0,
-        height: 20,
-        left: 50,
-        right: 0,
-        top: 50,
-        width: 200,
-      });
+      const { getByRole, getAllByRole } = setup();
+      const [track] = getAllByRole('presentation');
 
-      wrapper.find('.rrs__track').simulate('click', {
-        clientX: 100,
+      fireEvent.click(track, {
+        clientX: 80,
         clientY: 0,
         currentTarget: {},
       });
 
-      expect(mockOnChange).toHaveBeenLastCalledWith(
-        { x: 25, y: 0 },
-        {
-          axis: 'x',
-          classNamePrefix: 'rrs',
-          onChange: expect.any(Function),
-          onDragEnd: expect.any(Function),
-          x: 0,
-          xMax: 100,
-          xMin: 0,
-          xStep: 1,
-          y: 0,
-          yMax: 100,
-          yMin: 0,
-          yStep: 1,
-        },
-      );
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 15, y: 0 }, expect.any(Object));
+      expect(getByRole('slider')).toMatchSnapshot();
+    });
+
+    it('should handle focus, keydown and blur', () => {
+      const { getByRole } = setup();
+
+      fireEvent.focus(getByRole('slider'));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowRight' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 1, y: 0 }, expect.any(Object));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 2, y: 0 }, expect.any(Object));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowLeft' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 1, y: 0 }, expect.any(Object));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowDown' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
+
+      fireEvent.blur(getByRole('slider'));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
     });
   });
 
-  describe('with axis `xy`', () => {
-    const wrapper = setup('xy');
-
+  describe('with `xy` axis', () => {
     it('should render properly', () => {
-      expect(wrapper).toMatchSnapshot();
+      const { container } = setup('xy');
+
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    it('should handle focus, keydown and blur', () => {
+      const { getByRole } = setup('xy');
+
+      fireEvent.focus(getByRole('slider'));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowRight' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 1, y: 0 }, expect.any(Object));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 1, y: 1 }, expect.any(Object));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowLeft' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 1 }, expect.any(Object));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowDown' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
+
+      fireEvent.blur(getByRole('slider'));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
     });
   });
 
-  describe('with axis `y`', () => {
-    const wrapper = setup('y');
-
+  describe('with `y` axis', () => {
     it('should render properly', () => {
-      expect(wrapper).toMatchSnapshot();
+      const { container } = setup('y');
+
+      expect(container.firstChild).toMatchSnapshot();
+    });
+
+    it('should handle focus, keydown and blur', () => {
+      const { getByRole } = setup('y');
+
+      fireEvent.focus(getByRole('slider'));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowRight' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 1 }, expect.any(Object));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 2 }, expect.any(Object));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowLeft' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 1 }, expect.any(Object));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowDown' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
+
+      fireEvent.blur(getByRole('slider'));
+
+      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
     });
   });
 });

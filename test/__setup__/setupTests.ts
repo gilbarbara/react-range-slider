@@ -1,2 +1,2 @@
-import 'jest-enzyme/lib/index.js';
+import '@testing-library/jest-dom';
 import 'jest-extended';
