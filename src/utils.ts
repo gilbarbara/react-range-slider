@@ -1,25 +1,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { PlainObject, RangeSliderPosition, RangeSliderProps } from './types';
 
-/**
- * Remove properties from an object.
- */
-export function blacklist(input: PlainObject, exclude: string | Array<string>): PlainObject {
-  const output: PlainObject = {};
-  const filter = Array.isArray(exclude) ? exclude : [exclude];
-
-  for (const key in input) {
-    /* istanbul ignore else */
-    if ({}.hasOwnProperty.call(input, key)) {
-      if (!filter.includes(key)) {
-        output[key] = input[key];
-      }
-    }
-  }
-
-  return output;
-}
-
 export function getCoordinates(e: MouseEvent | TouchEvent) {
   if (window.TouchEvent && e instanceof TouchEvent) {
     const touch = e.touches[0];
@@ -100,6 +81,27 @@ export function num(value: string | number): number {
   }
 
   return parseInt(value, 10);
+}
+
+/**
+ *  Remove properties from an object
+ */
+export function removeProperties<T extends PlainObject, K extends keyof T>(
+  input: T,
+  ...filter: K[]
+): Omit<T, K> {
+  const output: any = {};
+
+  for (const key in input) {
+    /* istanbul ignore else */
+    if ({}.hasOwnProperty.call(input, key)) {
+      if (!filter.includes((key as unknown) as K)) {
+        output[key] = input[key];
+      }
+    }
+  }
+
+  return output;
 }
 
 export function round(value: number, increment: number): number {
