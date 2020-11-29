@@ -22,63 +22,66 @@
   "module": "esm/index.js",
   "files": [
     "esm",
-    "lib"
+    "lib",
+    "src"
   ],
-  "types": "lib",
+  "types": "esm",
   "sideEffects": false,
   "peerDependencies": {
-    "react": "^15.0.0 || ^16.0.0"
+    "react": "^16.8.0 || ^17.0.0"
   },
   "dependencies": {
     "deepmerge": "^4.2.2"
   },
   "devDependencies": {
     "@gilbarbara/tsconfig": "^0.1.0",
-    "@size-limit/preset-small-lib": "^4.0.1",
-    "@types/blacklist": "^1.1.0",
-    "@types/enzyme": "^3.10.4",
-    "@types/enzyme-adapter-react-16": "^1.0.5",
-    "@types/jest": "^25.1.1",
-    "@types/node": "^13.7.0",
+    "@size-limit/preset-small-lib": "^4.9.0",
+    "@types/enzyme": "^3.10.8",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.10",
     "@types/once": "^1.4.0",
-    "@types/react": "^16.9.19",
-    "@types/react-dom": "^16.9.5",
-    "@typescript-eslint/eslint-plugin": "^2.19.0",
-    "@typescript-eslint/parser": "^2.19.0",
-    "cross-env": "^7.0.0",
-    "del-cli": "^3.0.0",
+    "@types/react": "^16.14.2",
+    "@types/react-dom": "^16.9.10",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "cross-env": "^7.0.2",
+    "del-cli": "^3.0.1",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-react-hooks": "^2.3.0",
-    "husky": "^4.2.1",
-    "is-ci-cli": "^2.0.0",
-    "jest": "^25.1.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^4.3.0",
+    "is-ci-cli": "^2.1.2",
+    "jest": "^26.6.3",
     "jest-enzyme": "^7.1.2",
     "jest-extended": "^0.11.5",
-    "jest-watch-typeahead": "^0.4.2",
-    "prettier": "^1.19.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "jest-serializer-html": "^7.0.0",
+    "jest-watch-typeahead": "^0.6.1",
+    "prettier": "^2.2.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "repo-tools": "^0.2.0",
-    "ts-jest": "^25.2.0",
-    "typescript": "^3.7.5"
+    "size-limit": "^4.9.0",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.2"
   },
   "scripts": {
     "build": "npm run clean && npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc",
     "build:esm": "tsc -m es6 --outDir esm",
     "clean": "del lib/* && del esm/*",
-    "watch": "npm run build:esm && npm run build:cjs -- -w",
+    "watch:cjs": "npm run build:cjs -- -w",
+    "watch:esm": "npm run build:esm -- -w",
     "test": "is-ci \"test:coverage\" \"test:watch\"",
     "test:coverage": "jest --bail --coverage",
-    "test:watch": "jest --watch --verbose",
+    "test:watch": "jest --watchAll --verbose",
     "lint": "eslint --ext .ts,.tsx src test",
     "format": "prettier \"**/*.{js,jsx,json,yml,yaml,css,less,scss,ts,tsx,md,graphql,mdx}\" --write",
     "validate": "npm run lint && npm run test:coverage && npm run size",
@@ -94,11 +97,11 @@
   "size-limit": [
     {
       "path": "./esm/index.js",
-      "limit": "3 kB"
+      "limit": "4 kB"
     },
     {
       "path": "./lib/index.js",
-      "limit": "3 kB"
+      "limit": "4 kB"
     }
   ],
   "husky": {
