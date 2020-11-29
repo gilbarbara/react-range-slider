@@ -3,7 +3,11 @@
     "airbnb",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/typescript",
+    "plugin:jest-dom/recommended",
+    "plugin:jest/recommended",
     "plugin:prettier/recommended",
+    "plugin:testing-library/react",
+    "plugin:testing-library/recommended",
     "prettier/react",
     "prettier/standard"
   ],
@@ -12,7 +16,7 @@
     "browser": true,
     "jest": true
   },
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": ["@typescript-eslint", "jest", "jest-dom", "prettier", "testing-library"],
   "rules": {
     "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
     "no-restricted-syntax": ["error", "DebuggerStatement", "LabeledStatement", "WithStatement"],
