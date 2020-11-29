@@ -26,7 +26,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     };
   }
 
-  public static defaultProps: Partial<RangeSliderProps> = {
+  public static defaultProps = {
     axis: 'x',
     xMax: 100,
     xMin: 0,
@@ -36,7 +36,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     yStep: 1,
   };
 
-  componentDidUpdate(_: any, prevState: RangeSliderState) {
+  componentDidUpdate(_: RangeSliderProps, prevState: RangeSliderState) {
     const { x, y } = this.state;
     const { onChange } = this.props;
     const { x: prevX, y: prevY } = prevState;
@@ -366,5 +366,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     );
   }
 }
+
+export * from './types';
 
 export default RangeSlider;

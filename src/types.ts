@@ -1,8 +1,6 @@
 import * as React from 'react';
 
-export interface PlainObject {
-  [key: string]: any;
-}
+export type PlainObject = Record<string, any>;
 
 export interface RangeSliderPosition {
   x: number;
@@ -52,11 +50,12 @@ export interface RangeSliderStylesProp extends Partial<RangeSliderStyles> {
 
 export type RangeSliderState = RangeSliderPosition;
 
-export interface RangeSliderProps {
+export interface RangeSliderProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragEnd'> {
   axis?: 'x' | 'y' | 'xy';
   classNamePrefix?: string;
-  onChange?: (position: RangeSliderPosition, props: object) => void;
-  onDragEnd?: (position: RangeSliderPosition, props: object) => void;
+  onChange?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
+  onDragEnd?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
   styles?: RangeSliderStylesProp;
   x?: number;
   xMax?: number;
@@ -66,6 +65,4 @@ export interface RangeSliderProps {
   yMax?: number;
   yMin?: number;
   yStep?: number;
-
-  [key: string]: any;
 }
