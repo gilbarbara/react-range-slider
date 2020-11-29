@@ -2,7 +2,13 @@ import * as React from 'react';
 
 import { RangeSliderPosition, RangeSliderProps, RangeSliderSize, RangeSliderState } from './types';
 import getStyles from './styles';
-import { blacklist, getCoordinates, getNormalizedValue, getPosition, isUndefined } from './utils';
+import {
+  getCoordinates,
+  getNormalizedValue,
+  getPosition,
+  isUndefined,
+  removeProperties,
+} from './utils';
 
 class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   private handle: HTMLElement | null = null;
@@ -255,9 +261,10 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
 
   public render() {
     const { axis, classNamePrefix, xMin, xMax, yMin, yMax } = this.props;
-    const rest = blacklist(this.props, [
+    const rest = removeProperties(
+      this.props,
       'axis',
-      'classNamePrefix',
+      'className',
       'onChange',
       'onDragEnd',
       'styles',
@@ -269,7 +276,8 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
       'yMin',
       'yMax',
       'yStep',
-    ]);
+    );
+
     const { x: xPos, y: yPos } = this.position;
     const position = { left: `${xPos}%`, bottom: `${yPos}%` };
     const size: RangeSliderSize = {};
