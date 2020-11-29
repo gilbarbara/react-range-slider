@@ -4,16 +4,16 @@ import { num } from './utils';
 import { RangeSliderStyles, RangeSliderStylesProp, RangeSliderStylesOptions } from './types';
 
 const defaultOptions = {
-  handleBorder: '2px solid #000',
-  handleBorderRadius: '4px',
-  handleBorderRadiusXY: '50%',
-  handleColor: '#fff',
-  handleSize: '10px',
-  handleSizeXY: '20px',
-  handleSpace: '6px',
   height: '20px',
   padding: '6px',
   rangeColor: '#007bff',
+  thumbBorder: '2px solid #000',
+  thumbBorderRadius: '4px',
+  thumbBorderRadiusXY: '50%',
+  thumbColor: '#fff',
+  thumbSize: '10px',
+  thumbSizeXY: '20px',
+  thumbSpace: '6px',
   trackBorderRadius: '3px',
   trackColor: '#ccc',
   width: '20px',
@@ -47,7 +47,7 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
     position: 'absolute',
   };
 
-  const handleWrapper = {
+  const rail = {
     boxSizing: 'border-box',
     height: options.height,
     position: 'absolute',
@@ -55,10 +55,10 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
     width: options.width,
   };
 
-  const handle = {
-    backgroundColor: options.handleColor,
-    border: options.handleBorder,
-    borderRadius: options.handleBorderRadius,
+  const thumb = {
+    backgroundColor: options.thumbColor,
+    border: options.thumbBorder,
+    borderRadius: options.thumbBorderRadius,
     boxSizing: 'border-box',
     display: 'block',
     position: 'absolute',
@@ -66,32 +66,7 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
   };
 
   const defaultStyles = {
-    handleWrapper,
-    handleX: {
-      ...handle,
-      height: num(options.height) + num(options.handleSpace),
-      left: -(num(options.handleSize) / 2),
-      top: -(num(options.handleSpace) / 2),
-      width: options.handleSize,
-    },
-    handleXY: {
-      ...handle,
-      backgroundColor: 'transparent',
-      border: options.handleBorder,
-      borderRadius: options.handleBorderRadiusXY,
-      bottom: -(num(options.handleSizeXY) / 2),
-      height: options.handleSizeXY,
-      left: -(num(options.handleSizeXY) / 2),
-      position: 'absolute',
-      width: options.handleSizeXY,
-    },
-    handleY: {
-      ...handle,
-      bottom: -(num(options.handleSize) / 2),
-      height: options.handleSize,
-      left: -(num(options.handleSpace) / 2),
-      width: num(options.width) + num(options.handleSpace),
-    },
+    rail,
     rangeX: {
       ...range,
       height: '100%',
@@ -121,6 +96,31 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
       ...slider,
       height: '100%',
       width: num(options.width) + num(options.padding) * 2,
+    },
+    thumbX: {
+      ...thumb,
+      height: num(options.height) + num(options.thumbSpace),
+      left: -(num(options.thumbSize) / 2),
+      top: -(num(options.thumbSpace) / 2),
+      width: options.thumbSize,
+    },
+    thumbXY: {
+      ...thumb,
+      backgroundColor: 'transparent',
+      border: options.thumbBorder,
+      borderRadius: options.thumbBorderRadiusXY,
+      bottom: -(num(options.thumbSizeXY) / 2),
+      height: options.thumbSizeXY,
+      left: -(num(options.thumbSizeXY) / 2),
+      position: 'absolute',
+      width: options.thumbSizeXY,
+    },
+    thumbY: {
+      ...thumb,
+      bottom: -(num(options.thumbSize) / 2),
+      height: options.thumbSize,
+      left: -(num(options.thumbSpace) / 2),
+      width: num(options.width) + num(options.thumbSpace),
     },
     trackX: {
       ...track,

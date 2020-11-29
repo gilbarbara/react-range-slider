@@ -281,11 +281,12 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     const { x: xPos, y: yPos } = this.position;
     const position = { left: `${xPos}%`, bottom: `${yPos}%` };
     const size: RangeSliderSize = {};
-    let slider;
-    let range;
-    let track;
-    let handle;
+
     let orientation: 'horizontal' | 'vertical' | undefined;
+    let range;
+    let slider;
+    let thumb;
+    let track;
     let valuemax = xMax;
     let valuemin = xMin;
     let valuenow = this.x;
@@ -297,7 +298,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
       orientation = 'horizontal';
       range = this.styles.rangeX;
       track = this.styles.trackX;
-      handle = this.styles.handleX;
+      thumb = this.styles.thumbX;
     }
 
     /* istanbul ignore else */
@@ -306,7 +307,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
       slider = this.styles.sliderY;
       range = this.styles.rangeY;
       track = this.styles.trackY;
-      handle = this.styles.handleY;
+      thumb = this.styles.thumbY;
       orientation = 'vertical';
       valuemax = yMax;
       valuemin = yMin;
@@ -320,7 +321,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
       slider = this.styles.sliderXY;
       range = this.styles.rangeXY;
       track = this.styles.trackXY;
-      handle = this.styles.handleXY;
+      thumb = this.styles.thumbXY;
     }
 
     return (
@@ -339,7 +340,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
           />
           <div
             ref={c => (this.handle = c)}
-            style={{ ...this.styles.handleWrapper, ...position }}
+            style={{ ...this.styles.rail, ...position }}
             role="presentation"
             // @ts-ignore
             onTouchStart={this.handleTouchStart}
@@ -350,7 +351,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
               className={classNamePrefix && `${classNamePrefix}__handle`}
               onBlur={this.handleBlur}
               onFocus={this.handleFocus}
-              style={handle}
+              style={thumb}
               tabIndex={0}
               role="slider"
               aria-label="slider handle"

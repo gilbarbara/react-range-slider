@@ -12,7 +12,7 @@ describe('styles', () => {
       expect(
         getStyles({
           options: {
-            handleBorderRadius: 0,
+            thumbBorderRadius: 0,
             trackBorderRadius: 0,
           },
         }),

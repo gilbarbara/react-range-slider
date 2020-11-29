@@ -15,32 +15,32 @@ export interface RangeSliderSize {
 }
 
 export interface RangeSliderStylesOptions {
-  handleBorder: string | number;
-  handleBorderRadius: string | number;
-  handleBorderRadiusXY: string | number;
-  handleColor: string;
-  handleSize: string | number;
-  handleSizeXY: string | number;
-  handleSpace: string | number;
   height: string | number;
   padding: string | number;
   rangeColor: string;
+  thumbBorder: string | number;
+  thumbBorderRadius: string | number;
+  thumbBorderRadiusXY: string | number;
+  thumbColor: string;
+  thumbSize: string | number;
+  thumbSizeXY: string | number;
+  thumbSpace: string | number;
   trackBorderRadius: string | number;
   trackColor: string;
   width: string | number;
 }
 
 export interface RangeSliderStyles {
-  handleWrapper: React.CSSProperties;
-  handleX: React.CSSProperties;
-  handleXY: React.CSSProperties;
-  handleY: React.CSSProperties;
+  rail: React.CSSProperties;
   rangeX: React.CSSProperties;
   rangeXY: React.CSSProperties;
   rangeY: React.CSSProperties;
   sliderX: React.CSSProperties;
   sliderXY: React.CSSProperties;
   sliderY: React.CSSProperties;
+  thumbX: React.CSSProperties;
+  thumbXY: React.CSSProperties;
+  thumbY: React.CSSProperties;
   trackX: React.CSSProperties;
   trackXY: React.CSSProperties;
   trackY: React.CSSProperties;
