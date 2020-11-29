@@ -11,15 +11,19 @@ import {
 } from './utils';
 
 class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
-  private handle: HTMLElement | null = null;
-  private node: HTMLElement | null = null;
-  private offset: { x: number; y: number } = { x: 0, y: 0 };
-  private start: { x: number; y: number } = { x: 0, y: 0 };
-  private track: HTMLElement | null = null;
+  private readonly rail: React.RefObject<HTMLDivElement>;
+  private readonly slider: React.RefObject<HTMLDivElement>;
+  private readonly track: React.RefObject<HTMLDivElement>;
   private lastCoordinates = { x: 0, y: 0 };
+  private offset = { x: 0, y: 0 };
+  private start = { x: 0, y: 0 };
 
   constructor(props: RangeSliderProps) {
     super(props);
+
+    this.slider = React.createRef();
+    this.rail = React.createRef();
+    this.track = React.createRef();
 
     this.state = {
       x: getNormalizedValue('x', props),
@@ -100,34 +104,29 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     return isUndefined(y) ? innerY : y;
   }
 
-  private getDragPosition = (data: RangeSliderPosition) => {
-    const { x, y } = data;
-
+  private getDragPosition = ({ x, y }: RangeSliderPosition) => {
     return {
       x: x + this.start.x - this.offset.x,
       y: this.offset.y + this.start.y - y,
     };
   };
 
-  private updateOptions = (data: RangeSliderPosition) => {
-    const { handle, track } = this;
-    const { x, y } = data;
+  private updateOptions = ({ x, y }: RangeSliderPosition) => {
+    const { rail, track } = this;
 
     this.start = {
-      x: handle!.offsetLeft,
-      y: track!.offsetHeight - handle!.offsetTop - handle!.offsetHeight,
+      x: rail.current?.offsetLeft ?? 0,
+      y:
+        (track.current?.offsetHeight ?? 0) -
+        (rail.current?.offsetTop ?? 0) -
+        (rail.current?.offsetHeight ?? 0),
     };
     this.lastCoordinates = { x, y };
     this.offset = { x, y };
   };
 
   private updatePosition = (position: RangeSliderPosition) => {
-    let rect: ClientRect;
-
-    /* istanbul ignore else */
-    if (this.node) {
-      rect = this.node.getBoundingClientRect();
-    }
+    const rect = this.slider.current?.getBoundingClientRect();
 
     this.setState(getPosition(position, this.props, rect! || {}));
   };
@@ -159,12 +158,8 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   private handleDragEnd = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
     const { onDragEnd } = this.props;
-    let rect: ClientRect;
 
-    /* istanbul ignore else */
-    if (this.node) {
-      rect = this.node.getBoundingClientRect();
-    }
+    const rect = this.slider.current?.getBoundingClientRect();
 
     document.removeEventListener('mousemove', this.handleDrag);
     document.removeEventListener('mouseup', this.handleDragEnd);
@@ -269,7 +264,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   };
 
   public render() {
-    const { axis, classNamePrefix, xMin, xMax, yMin, yMax } = this.props;
+    const { axis, className, xMin, xMax, yMin, yMax } = this.props;
     const rest = removeProperties(
       this.props,
       'axis',
@@ -334,30 +329,27 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     }
 
     return (
-      <div ref={c => (this.node = c)} style={slider} {...rest} className={classNamePrefix}>
+      <div ref={this.slider} className={className} style={slider} {...rest}>
         <div
-          className={classNamePrefix && `${classNamePrefix}__track`}
-          ref={c => (this.track = c)}
+          className={className && `${className}__track`}
+          ref={this.track}
           style={track}
           role="presentation"
-          // @ts-ignore
+          // @ts-ignore We can't use React's events because the listeners
           onClick={this.handleClickTrack}
         >
+          <div className={className && `${className}__range`} style={{ ...size, ...range }} />
           <div
-            className={classNamePrefix && `${classNamePrefix}__range`}
-            style={{ ...size, ...range }}
-          />
-          <div
-            ref={c => (this.handle = c)}
+            ref={this.rail}
             style={{ ...this.styles.rail, ...position }}
             role="presentation"
-            // @ts-ignore
+            // @ts-ignore We can't use React's events because the listeners
             onTouchStart={this.handleTouchStart}
-            // @ts-ignore
+            // @ts-ignore We can't use React's events because the listeners
             onMouseDown={this.handleMouseDown}
           >
             <span
-              className={classNamePrefix && `${classNamePrefix}__handle`}
+              className={className && `${className}__thumb`}
               onBlur={this.handleBlur}
               onFocus={this.handleFocus}
               style={thumb}
