@@ -11,11 +11,12 @@ import {
 } from './utils';
 
 class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
+  private lastCoordinates = { x: 0, y: 0 };
+  private mounted = false;
+  private offset = { x: 0, y: 0 };
   private readonly rail: React.RefObject<HTMLDivElement>;
   private readonly slider: React.RefObject<HTMLDivElement>;
   private readonly track: React.RefObject<HTMLDivElement>;
-  private lastCoordinates = { x: 0, y: 0 };
-  private offset = { x: 0, y: 0 };
   private start = { x: 0, y: 0 };
 
   constructor(props: RangeSliderProps) {
@@ -26,6 +27,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     this.track = React.createRef();
 
     this.state = {
+      isDragging: false,
       x: getNormalizedValue('x', props),
       y: getNormalizedValue('y', props),
     };
@@ -41,6 +43,10 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     yStep: 1,
   };
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+
   componentDidUpdate(_: RangeSliderProps, prevState: RangeSliderState) {
     const { x, y } = this.state;
     const { onChange } = this.props;
@@ -48,8 +54,12 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
 
     /* istanbul ignore else */
     if (onChange && (x !== prevX || y !== prevY)) {
-      onChange(this.state, this.props);
+      onChange({ x, y }, this.props);
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   private get position() {
@@ -136,15 +146,21 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   };
 
   private handleClickTrack = (e: MouseEvent | TouchEvent) => {
-    const element = e.currentTarget as Element;
-    const { x, y } = getCoordinates(e, this.lastCoordinates);
-    const { left, bottom } = element.getBoundingClientRect();
+    const { isDragging } = this.state;
 
-    this.lastCoordinates = { x, y };
-    this.updatePosition({
-      x: x - left,
-      y: bottom - y,
-    });
+    if (!isDragging) {
+      const element = e.currentTarget as Element;
+      const { x, y } = getCoordinates(e, this.lastCoordinates);
+      const { left, bottom } = element.getBoundingClientRect();
+
+      this.lastCoordinates = { x, y };
+      this.updatePosition({
+        x: x - left,
+        y: bottom - y,
+      });
+    } else if (this.mounted) {
+      this.setState({ isDragging: false });
+    }
   };
 
   private handleDrag = (e: MouseEvent | TouchEvent) => {
@@ -157,6 +173,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
 
   private handleDragEnd = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
+
     const { onDragEnd } = this.props;
 
     const rect = this.slider.current?.getBoundingClientRect();
@@ -248,6 +265,8 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     e.preventDefault();
 
     this.updateOptions(getCoordinates(e, this.lastCoordinates));
+
+    this.setState({ isDragging: true });
 
     document.addEventListener('mousemove', this.handleDrag);
     document.addEventListener('mouseup', this.handleDragEnd);
