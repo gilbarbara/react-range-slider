@@ -1,5 +1,21 @@
 import { PlainObject, RangeSliderPosition, RangeSliderProps } from './types';
 
+type BaseProps = Required<
+  Pick<RangeSliderProps, 'axis' | 'xMax' | 'xMin' | 'xStep' | 'yMax' | 'yMin' | 'yStep'>
+>;
+
+export function getBaseProps(props?: RangeSliderProps): BaseProps {
+  return {
+    axis: props?.axis ?? 'x',
+    xMax: props?.xMax ?? 100,
+    xMin: props?.xMin ?? 0,
+    xStep: props?.xStep ?? 1,
+    yMax: props?.yMax ?? 100,
+    yMin: props?.yMin ?? 0,
+    yStep: props?.yStep ?? 1,
+  };
+}
+
 export function getCoordinates(
   e: MouseEvent | TouchEvent,
   lastPosition: RangeSliderPosition,
@@ -22,10 +38,10 @@ export function getCoordinates(
 export function getPosition(
   position: RangeSliderPosition,
   props: RangeSliderProps,
-  rect: ClientRect,
+  rect?: DOMRect,
 ): RangeSliderPosition {
-  const { axis, xMax, xMin, xStep, yMax, yMin, yStep } = props;
-  const { height, width }: ClientRect = rect;
+  const { axis, xMax, xMin, xStep, yMax, yMin, yStep } = getBaseProps(props);
+  const { height = 0, width = 0 } = rect || {};
   let { x, y } = position;
   let dx = 0;
   let dy = 0;
@@ -44,16 +60,16 @@ export function getPosition(
   }
 
   if (axis === 'x' || axis === 'xy') {
-    dx = Math.round((x / width) * (xMax! - xMin!));
+    dx = Math.round((x / width) * (xMax - xMin));
   }
 
   if (axis === 'y' || axis === 'xy') {
-    dy = Math.round((y / height) * (yMax! - yMin!));
+    dy = Math.round((y / height) * (yMax - yMin));
   }
 
   return {
-    x: round(dx, xStep!),
-    y: round(dy, yStep!),
+    x: round(dx, xStep),
+    y: round(dy, yStep),
   };
 }
 

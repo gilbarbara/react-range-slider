@@ -3,6 +3,7 @@ import * as React from 'react';
 import { RangeSliderPosition, RangeSliderProps, RangeSliderSize, RangeSliderState } from './types';
 import getStyles from './styles';
 import {
+  getBaseProps,
   getCoordinates,
   getNormalizedValue,
   getPosition,
@@ -33,15 +34,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     };
   }
 
-  public static defaultProps = {
-    axis: 'x',
-    xMax: 100,
-    xMin: 0,
-    xStep: 1,
-    yMax: 100,
-    yMin: 0,
-    yStep: 1,
-  };
+  public static defaultProps = getBaseProps();
 
   componentDidMount() {
     this.mounted = true;
@@ -63,9 +56,9 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   }
 
   private get position() {
-    const { axis, xMax, xMin, yMax, yMin } = this.props;
-    let bottom: number = ((this.y - yMin!) / (yMax! - yMin!)) * 100;
-    let left: number = ((this.x - xMin!) / (xMax! - xMin!)) * 100;
+    const { axis, xMax, xMin, yMax, yMin } = getBaseProps(this.props);
+    let bottom: number = ((this.y - yMin) / (yMax - yMin)) * 100;
+    let left: number = ((this.x - xMin) / (xMax - xMin)) * 100;
 
     if (bottom > 100) {
       bottom = 100;
@@ -138,7 +131,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   private updatePosition = (position: RangeSliderPosition) => {
     const rect = this.slider.current?.getBoundingClientRect();
 
-    this.setState(getPosition(position, this.props, rect! || {}));
+    this.setState(getPosition(position, this.props, rect));
   };
 
   private handleBlur = () => {
@@ -191,7 +184,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
         getPosition(
           this.getDragPosition(getCoordinates(e, this.lastCoordinates)),
           this.props,
-          rect! || {},
+          rect,
         ),
         this.props,
       );
@@ -204,7 +197,9 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
 
   private handleKeydown = (e: KeyboardEvent) => {
     const { x: innerX, y: innerY } = this.state;
-    const { axis, x, xMax, xMin, xStep, y, yMax, yMin, yStep } = this.props;
+    const { x, y } = this.props;
+    const { axis, xMax, xMin, xStep, yMax, yMin, yStep } = getBaseProps(this.props);
+
     const codes = { down: 'ArrowDown', left: 'ArrowLeft', up: 'ArrowUp', right: 'ArrowRight' };
 
     /* istanbul ignore else */
@@ -215,10 +210,10 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
         x: isUndefined(x) ? innerX : getNormalizedValue('x', this.props),
         y: isUndefined(y) ? innerY : getNormalizedValue('y', this.props),
       };
-      const xMinus = position.x - xStep! <= xMin! ? xMin! : position.x - xStep!;
-      const xPlus = position.x + xStep! >= xMax! ? xMax! : position.x + xStep!;
-      const yMinus = position.y - yStep! <= yMin! ? yMin! : position.y - yStep!;
-      const yPlus = position.y + yStep! >= yMax! ? yMax! : position.y + yStep!;
+      const xMinus = position.x - xStep <= xMin ? xMin : position.x - xStep;
+      const xPlus = position.x + xStep >= xMax ? xMax : position.x + xStep;
+      const yMinus = position.y - yStep <= yMin ? yMin : position.y - yStep;
+      const yPlus = position.y + yStep >= yMax ? yMax : position.y + yStep;
 
       switch (e.code) {
         case codes.up: {
@@ -315,7 +310,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     let valuenow = this.x;
 
     /* istanbul ignore else */
-    if (axis! === 'x') {
+    if (axis === 'x') {
       size.width = `${xPos}%`;
       slider = this.styles.sliderX;
       orientation = 'horizontal';
@@ -325,7 +320,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     }
 
     /* istanbul ignore else */
-    if (axis! === 'y') {
+    if (axis === 'y') {
       size.height = `${yPos}%`;
       slider = this.styles.sliderY;
       range = this.styles.rangeY;
@@ -338,7 +333,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
     }
 
     /* istanbul ignore else */
-    if (axis! === 'xy') {
+    if (axis === 'xy') {
       size.height = `${yPos}%`;
       size.width = `${xPos}%`;
       slider = this.styles.sliderXY;
