@@ -48,7 +48,9 @@ export interface RangeSliderStylesProp extends Partial<RangeSliderStyles> {
   options?: Partial<RangeSliderStylesOptions>;
 }
 
-export type RangeSliderState = RangeSliderPosition;
+export interface RangeSliderState extends RangeSliderPosition {
+  isDragging: boolean;
+}
 
 export interface RangeSliderProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragEnd'> {
