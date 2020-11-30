@@ -4,7 +4,7 @@
 
 A range slider component for React
 
-View the [demo](https://qxxop6x4w4.codesandbox.io/)
+View the [demo](https://codesandbox.io/s/github/gilbarbara/react-range-slider/tree/master/demo)
 
 ## Installation
 
@@ -72,7 +72,7 @@ Max value of Y
 **yStep** {number} ▶︎`1`  
 Step of Y
 
-**onChange** {function} - **required**  
+**onChange** {function}  
 Change callback
 
 **onDragEnd** {function}  
