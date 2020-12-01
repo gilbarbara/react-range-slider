@@ -1,58 +1,39 @@
-import React, { ChangeEvent } from 'react';
-import RangeSlider, { RangeSliderPosition, RangeSliderProps } from '@gilbarbara/react-range-slider';
+import React, { ChangeEvent, useState } from 'react';
+import RangeSlider, { RangeSliderPosition } from '@gilbarbara/react-range-slider';
 
-export default class AxisX extends React.Component {
-  state = {
-    x: 20,
-  };
+import { CurrentValue, Header, Prop, Props, Title } from './components';
 
-  handleDragEnd = (position: RangeSliderPosition, props: RangeSliderProps) => {
-    console.log('> handleDragEnd', position, props);
-  };
+export default function AxisX() {
+  const [x, setX] = useState(20);
 
-  handleChange = ({ x }: RangeSliderPosition) => {
+  const handleChange = ({ x }: RangeSliderPosition) => {
     console.log('> handleChange', x);
-    this.setState({ x });
+    setX(x);
   };
 
-  handleRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleRangeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
 
-    this.setState({
-      x: parseInt(value, 10),
-    });
+    setX(parseInt(value, 10));
   };
 
-  render() {
-    const { x } = this.state;
-    const min = 0;
-    const max = 200;
-    const step = 5;
+  const min = 0;
+  const max = 200;
+  const step = 5;
 
-    return (
-      <div>
-        <h3>axis: x</h3>
-        <p>{`min: ${min} | max: ${max} | step: ${step}`}</p>
-        <RangeSlider
-          axis="x"
-          x={x}
-          xMin={min}
-          xMax={max}
-          xStep={step}
-          onDragEnd={this.handleDragEnd}
-          onChange={this.handleChange}
-        />
-        <div>{`x: ${x}`}</div>
+  return (
+    <div>
+      <Header>
+        <Title>axis: x (controlled)</Title>
+        <Props>
+          with <Prop>onChange</Prop>
+        </Props>
+      </Header>
+      <p>{`min: ${min} | max: ${max} | step: ${step}`}</p>
+      <RangeSlider axis="x" x={x} xMin={min} xMax={max} xStep={step} onChange={handleChange} />
+      <CurrentValue>{`x: ${x}`}</CurrentValue>
 
-        <input
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={x}
-          onChange={this.handleRangeChange}
-        />
-      </div>
-    );
-  }
+      <input type="range" min={min} max={max} step={step} value={x} onChange={handleRangeChange} />
+    </div>
+  );
 }
