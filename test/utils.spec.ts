@@ -62,6 +62,18 @@ describe('utils', () => {
   });
 
   describe('getPosition', () => {
+    beforeAll(() => {
+      // @ts-ignore
+      Element.prototype.getBoundingClientRect = () => ({
+        bottom: 0,
+        height: 100,
+        left: 0,
+        right: 0,
+        top: 0,
+        width: 20,
+      });
+    });
+
     const props = {
       axis: 'x' as const,
       onChange: () => undefined,
@@ -75,25 +87,18 @@ describe('utils', () => {
       yStep: 10,
     };
 
-    const rect = {
-      bottom: 0,
-      height: 100,
-      left: 0,
-      right: 0,
-      top: 0,
-      width: 20,
-    };
-
     it('should return x,y values', () => {
-      expect(getPosition({ x: 10, y: 10 }, props, rect)).toEqual({
+      const element = document.createElement('div');
+
+      expect(getPosition({ x: 10, y: 10 }, props, element)).toEqual({
         x: 50,
         y: 0,
       });
-      expect(getPosition({ x: -10, y: -10 }, { ...props, axis: 'y' }, rect)).toEqual({
+      expect(getPosition({ x: -10, y: -10 }, { ...props, axis: 'y' }, element)).toEqual({
         x: 0,
         y: 0,
       });
-      expect(getPosition({ x: 110, y: 110 }, { ...props, axis: 'xy' }, rect)).toEqual({
+      expect(getPosition({ x: 110, y: 110 }, { ...props, axis: 'xy' }, null)).toEqual({
         x: 100,
         y: 100,
       });

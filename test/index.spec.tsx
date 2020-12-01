@@ -4,6 +4,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import RangeSlider, { RangeSliderProps } from '../src';
 
+const mockOnAfterEnd = jest.fn();
 const mockOnChange = jest.fn();
 const mockOnDragEnd = jest.fn();
 
@@ -11,6 +12,7 @@ function setup(axis = 'x') {
   return render(
     <RangeSlider
       axis={axis as RangeSliderProps['axis']}
+      onAfterEnd={mockOnAfterEnd}
       onChange={mockOnChange}
       onDragEnd={mockOnDragEnd}
       className="test"
@@ -32,6 +34,7 @@ describe('RangeSlider', () => {
   });
 
   afterEach(() => {
+    mockOnAfterEnd.mockClear();
     mockOnChange.mockClear();
     mockOnDragEnd.mockClear();
   });
@@ -64,6 +67,7 @@ describe('RangeSlider', () => {
         currentTarget: {},
       });
 
+      expect(mockOnAfterEnd).toHaveBeenLastCalledWith({ x: 65, y: 0 }, expect.any(Object));
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 65, y: 0 }, expect.any(Object));
       expect(mockOnDragEnd).toHaveBeenLastCalledWith({ x: 65, y: 0 }, expect.any(Object));
       expect(getByRole('slider')).toMatchSnapshot();
@@ -97,6 +101,7 @@ describe('RangeSlider', () => {
         currentTarget: {},
       });
 
+      expect(mockOnAfterEnd).toHaveBeenLastCalledWith({ x: 25, y: 0 }, expect.any(Object));
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 25, y: 0 }, expect.any(Object));
       expect(mockOnDragEnd).toHaveBeenLastCalledWith({ x: 25, y: 0 }, expect.any(Object));
       expect(getByRole('slider')).toMatchSnapshot();
@@ -112,6 +117,7 @@ describe('RangeSlider', () => {
         currentTarget: {},
       });
 
+      expect(mockOnAfterEnd).toHaveBeenLastCalledWith({ x: 15, y: 0 }, expect.any(Object));
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 15, y: 0 }, expect.any(Object));
       expect(getByRole('slider')).toMatchSnapshot();
     });

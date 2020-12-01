@@ -56,6 +56,7 @@ export interface RangeSliderProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragEnd'> {
   axis?: 'x' | 'y' | 'xy';
   classNamePrefix?: string;
+  onAfterEnd?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
   onChange?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
   onDragEnd?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
   styles?: RangeSliderStylesProp;

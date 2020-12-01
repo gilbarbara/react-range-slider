@@ -129,9 +129,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   };
 
   private updatePosition = (position: RangeSliderPosition) => {
-    const rect = this.slider.current?.getBoundingClientRect();
-
-    this.setState(getPosition(position, this.props, rect));
+    this.setState(getPosition(position, this.props, this.slider.current));
   };
 
   private handleBlur = () => {
@@ -139,18 +137,24 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   };
 
   private handleClickTrack = (e: MouseEvent | TouchEvent) => {
+    const { onAfterEnd } = this.props;
     const { isDragging } = this.state;
 
     if (!isDragging) {
       const element = e.currentTarget as Element;
       const { x, y } = getCoordinates(e, this.lastCoordinates);
       const { left, bottom } = element.getBoundingClientRect();
-
-      this.lastCoordinates = { x, y };
-      this.updatePosition({
+      const nextPosition = {
         x: x - left,
         y: bottom - y,
-      });
+      };
+
+      this.lastCoordinates = { x, y };
+      this.updatePosition(nextPosition);
+
+      if (onAfterEnd) {
+        onAfterEnd(getPosition(nextPosition, this.props, this.slider.current), this.props);
+      }
     } else if (this.mounted) {
       this.setState({ isDragging: false });
     }
@@ -167,9 +171,12 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
   private handleDragEnd = (e: MouseEvent | TouchEvent) => {
     e.preventDefault();
 
-    const { onDragEnd } = this.props;
-
-    const rect = this.slider.current?.getBoundingClientRect();
+    const { onAfterEnd, onDragEnd } = this.props;
+    const position = getPosition(
+      this.getDragPosition(getCoordinates(e, this.lastCoordinates)),
+      this.props,
+      this.slider.current,
+    );
 
     document.removeEventListener('mousemove', this.handleDrag);
     document.removeEventListener('mouseup', this.handleDragEnd);
@@ -180,14 +187,12 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
 
     /* istanbul ignore else */
     if (onDragEnd) {
-      onDragEnd(
-        getPosition(
-          this.getDragPosition(getCoordinates(e, this.lastCoordinates)),
-          this.props,
-          rect,
-        ),
-        this.props,
-      );
+      onDragEnd(position, this.props);
+    }
+
+    /* istanbul ignore else */
+    if (onAfterEnd) {
+      onAfterEnd(position, this.props);
     }
   };
 
@@ -283,6 +288,7 @@ class RangeSlider extends React.Component<RangeSliderProps, RangeSliderState> {
       this.props,
       'axis',
       'className',
+      'onAfterEnd',
       'onChange',
       'onDragEnd',
       'styles',
