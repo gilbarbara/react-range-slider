@@ -1,91 +1,80 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import RangeSlider, { RangeSliderPosition, RangeSliderProps } from '@gilbarbara/react-range-slider';
 
-export default class AxisXY extends React.Component {
-  state = {
-    x: 20,
-    y: 20,
-  };
+import { CurrentValue, Header, Prop, Props, RangeWrapperXY, Title } from './components';
 
-  handleDragEnd = (position: RangeSliderPosition, props: RangeSliderProps) => {
+export default function AxisXY() {
+  const [{ x, y }, setPosition] = useState({ x: 20, y: 20 });
+
+  const handleDragEnd = (position: RangeSliderPosition, props: RangeSliderProps) => {
     console.log('> handleDragEnd', position, props);
   };
 
-  handleChange = ({ x, y }: RangeSliderPosition) => {
+  const handleChange = ({ x, y }: RangeSliderPosition) => {
     console.log('handleChange', { x, y });
-    this.setState({ x, y });
+    setPosition({ x, y });
   };
 
-  handleRangeChangeY = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleRangeChangeY = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
 
-    this.setState({
+    setPosition(s => ({
+      ...s,
       y: parseInt(value, 10),
-    });
+    }));
   };
 
-  handleRangeChangeX = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleRangeChangeX = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
 
-    this.setState({
+    setPosition(s => ({
+      ...s,
       x: parseInt(value, 10),
-    });
+    }));
   };
 
-  render() {
-    const { x, y } = this.state;
-    const min = 0;
-    const max = 200;
-    const step = 2;
+  const min = 0;
+  const max = 200;
+  const step = 2;
 
-    return (
-      <div>
-        <h3>axis: xy</h3>
-        <p>{`min: ${min} | max: ${max} | step: ${step}`}</p>
-        <div style={{ margin: '0 auto', height: 200, width: 200 }}>
-          <RangeSlider
-            axis="xy"
-            styles={{
-              options: {
-                rangeColor: '#31ff00',
-                thumbBorderRadiusXY: 4,
-                thumbSizeXY: 15,
-                thumbSpace: 0,
-                width: 10,
-              },
-            }}
-            x={x}
-            xMin={min}
-            xMax={max}
-            xStep={step}
-            y={y}
-            yMin={min}
-            yMax={max}
-            yStep={step}
-            onDragEnd={this.handleDragEnd}
-            onChange={this.handleChange}
-          />
-        </div>
-        <div>{`x: ${x} | y: ${y}`}</div>
+  return (
+    <div>
+      <Header>
+        <Title>axis: xy</Title>
+        <Props>
+          with <Prop>onChange</Prop> and <Prop>onDragEnd</Prop>
+        </Props>
+      </Header>
+      <p>{`min: ${min} | max: ${max} | step: ${step}`}</p>
+      <RangeWrapperXY>
+        <RangeSlider
+          axis="xy"
+          styles={{
+            options: {
+              rangeColor: '#31ff00',
+              thumbBorderRadiusXY: 4,
+              thumbSizeXY: 15,
+              thumbSpace: 0,
+              width: 10,
+            },
+          }}
+          x={x}
+          xMin={min}
+          xMax={max}
+          xStep={step}
+          y={y}
+          yMin={min}
+          yMax={max}
+          yStep={step}
+          onDragEnd={handleDragEnd}
+          onChange={handleChange}
+        />
+      </RangeWrapperXY>
+      <CurrentValue>{`x: ${x} | y: ${y}`}</CurrentValue>
 
-        <input
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={x}
-          onChange={this.handleRangeChangeX}
-        />
-        <br />
-        <input
-          type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={y}
-          onChange={this.handleRangeChangeY}
-        />
-      </div>
-    );
-  }
+      <input type="range" min={min} max={max} step={step} value={x} onChange={handleRangeChangeX} />
+      <br />
+      <input type="range" min={min} max={max} step={step} value={y} onChange={handleRangeChangeY} />
+    </div>
+  );
 }
