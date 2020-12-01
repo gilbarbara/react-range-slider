@@ -38,10 +38,10 @@ export function getCoordinates(
 export function getPosition(
   position: RangeSliderPosition,
   props: RangeSliderProps,
-  rect?: DOMRect,
+  el: HTMLDivElement | null,
 ): RangeSliderPosition {
   const { axis, xMax, xMin, xStep, yMax, yMin, yStep } = getBaseProps(props);
-  const { height = 0, width = 0 } = rect || {};
+  const { height = xMax, width = yMax } = el?.getBoundingClientRect() || {};
   let { x, y } = position;
   let dx = 0;
   let dy = 0;

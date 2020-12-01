@@ -14,32 +14,18 @@ npm i @gilbarbara/react-range-slider
 
 ## Usage
 
-```jsx
-import React, { Component } from 'react';
-import RangeSlider from '@gilbarbara/react-range-slider';
+```typescript
+import React, { useState } from 'react';
+import RangeSlider, { RangeSliderPosition, RangeSliderProps } from '@gilbarbara/react-range-slider';
 
-export default class App extends Component {
-  state = {
-    x: 10,
-    y: 10,
-  };
+export default function App() {
+	const [x, setX] = useState(10);
 
-  handleChange = (position, props) => {
-    this.setState(position);
-  };
+	const handleChange = (position: RangeSliderPosition, props: RangeSliderProps) => {
+		setX(position.x);
+	};
 
-  render() {
-    const { x, y } = this.state;
-
-    return (
-      <RangeSlider
-        axis="xy"
-        x={x}
-        y={y}
-        onChange={this.handleChange}
-      />
-    );
-  }
+	return <RangeSlider axis="x" x={x} onChange={handleChange} />;
 }
 ```
 
@@ -72,11 +58,14 @@ Max value of Y
 **yStep** {number} ▶︎`1`  
 Step of Y
 
+**onAfterChange** {function}  
+It is called after the slider changed (click or drag)
+
 **onChange** {function}  
-Change callback
+It is called for each step
 
 **onDragEnd** {function}  
-DragEnd callback
+It is called after dragging the thumb
 
 ## Customization
 
