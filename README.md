@@ -58,7 +58,7 @@ Max value of Y
 **yStep** {number} ▶︎`1`  
 Step of Y
 
-**onAfterChange** {function}  
+**onAfterEnd** {function}  
 It is called after the slider changed (click or drag)
 
 **onChange** {function}  
