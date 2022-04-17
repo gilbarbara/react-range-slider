@@ -49,6 +49,8 @@ export default function AxisXY() {
       <RangeWrapperXY>
         <RangeSlider
           axis="xy"
+          onChange={handleChange}
+          onDragEnd={handleDragEnd}
           styles={{
             options: {
               rangeColor: '#31ff00',
@@ -59,22 +61,20 @@ export default function AxisXY() {
             },
           }}
           x={x}
-          xMin={min}
           xMax={max}
+          xMin={min}
           xStep={step}
           y={y}
-          yMin={min}
           yMax={max}
+          yMin={min}
           yStep={step}
-          onDragEnd={handleDragEnd}
-          onChange={handleChange}
         />
       </RangeWrapperXY>
       <CurrentValue>{`x: ${x} | y: ${y}`}</CurrentValue>
 
-      <input type="range" min={min} max={max} step={step} value={x} onChange={handleRangeChangeX} />
+      <input max={max} min={min} onChange={handleRangeChangeX} step={step} type="range" value={x} />
       <br />
-      <input type="range" min={min} max={max} step={step} value={y} onChange={handleRangeChangeY} />
+      <input max={max} min={min} onChange={handleRangeChangeY} step={step} type="range" value={y} />
     </div>
   );
 }

@@ -28,6 +28,7 @@ export default function AxisY() {
       <RangeWrapperY>
         <RangeSlider
           axis="y"
+          onAfterEnd={handleAfterEnd}
           styles={{
             options: {
               thumbBorderRadius: 16,
@@ -38,15 +39,14 @@ export default function AxisY() {
               width: 10,
             },
           }}
-          yMin={min}
           yMax={max}
+          yMin={min}
           yStep={step}
-          onAfterEnd={handleAfterEnd}
         />
       </RangeWrapperY>
       <CurrentValue>{`y: ${y}`}</CurrentValue>
 
-      <input type="range" min={min} max={max} step={step} defaultValue={100} />
+      <input max={max} min={min} step={step} type="range" value={y} />
     </div>
   );
 }
