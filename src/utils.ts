@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { PlainObject, RangeSliderPosition, RangeSliderProps } from './types';
 
 type BaseProps = Required<
@@ -17,11 +19,12 @@ export function getBaseProps(props?: RangeSliderProps): BaseProps {
 }
 
 export function getCoordinates(
-  e: MouseEvent | TouchEvent,
+  event: MouseEvent | React.MouseEvent | TouchEvent | React.TouchEvent,
   lastPosition: RangeSliderPosition,
 ): RangeSliderPosition {
-  if ('touches' in e) {
-    const [touch] = e.touches;
+  if ('touches' in event) {
+    // eslint-disable-next-line unicorn/prefer-spread
+    const [touch] = [...Array.from(event.touches)];
 
     return {
       x: touch ? touch.clientX : lastPosition.x,
@@ -30,8 +33,8 @@ export function getCoordinates(
   }
 
   return {
-    x: e.clientX,
-    y: e.clientY,
+    x: event.clientX,
+    y: event.clientY,
   };
 }
 
@@ -49,12 +52,15 @@ export function getPosition(
   if (x < 0) {
     x = 0;
   }
+
   if (x > width) {
     x = width;
   }
+
   if (y < 0) {
     y = 0;
   }
+
   if (y > height) {
     y = height;
   }
@@ -109,7 +115,7 @@ export function isUndefined(value: unknown): value is undefined {
 /**
  * Parse a string into a number or return it if it's already a number
  */
-export function num(value: string | number): number {
+export function parseNumber(value: string | number): number {
   if (typeof value === 'number') {
     return value;
   }
@@ -129,7 +135,7 @@ export function removeProperties<T extends PlainObject, K extends keyof T>(
   for (const key in input) {
     /* istanbul ignore else */
     if ({}.hasOwnProperty.call(input, key)) {
-      if (!filter.includes((key as unknown) as K)) {
+      if (!filter.includes(key as unknown as K)) {
         output[key] = input[key];
       }
     }
