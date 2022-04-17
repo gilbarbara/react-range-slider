@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import AxisX from "./AxisX";
-import AxisY from "./AxisY";
-import AxisXY from "./AxisXY";
+import AxisX from './AxisX';
+import AxisXY from './AxisXY';
+import AxisY from './AxisY';
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const Item = styled.div`
   min-width: 290px;
 `;
 
-const RangeSliderDemo = () => {
+function RangeSliderDemo() {
   return (
     <Wrapper>
       <Item>
@@ -34,6 +34,6 @@ const RangeSliderDemo = () => {
       </Item>
     </Wrapper>
   );
-};
+}
 
 export default RangeSliderDemo;
