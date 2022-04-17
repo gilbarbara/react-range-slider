@@ -1,4 +1,4 @@
-import * as deepmerge from 'deepmerge';
+import { deepmerge } from 'deepmerge-ts';
 import { num } from './utils';
 
 import { RangeSliderStyles, RangeSliderStylesProp, RangeSliderStylesOptions } from './types';
