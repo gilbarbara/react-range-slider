@@ -31,7 +31,7 @@
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "dependencies": {
-    "deepmerge": "^4.2.2"
+    "deepmerge-ts": "^4.0.3"
   },
   "devDependencies": {
     "@gilbarbara/eslint-config": "^0.2.1",
