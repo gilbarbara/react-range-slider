@@ -1,10 +1,10 @@
 # react-range-slider
 
-[![npm version](https://badge.fury.io/js/%40gilbarbara%2Freact-range-slider.svg)](https://badge.fury.io/js/%40gilbarbara%2Freact-range-slider) [![build status](https://travis-ci.org/gilbarbara/react-range-slider.svg)](https://travis-ci.org/gilbarbara/react-range-slider) [![Maintainability](https://api.codeclimate.com/v1/badges/cc1a3d9dd8e9731beeaf/maintainability)](https://codeclimate.com/github/gilbarbara/react-range-slider/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/cc1a3d9dd8e9731beeaf/test_coverage)](https://codeclimate.com/github/gilbarbara/react-range-slider/test_coverage)
+[![npm version](https://badge.fury.io/js/%40gilbarbara%2Freact-range-slider.svg)](https://badge.fury.io/js/%40gilbarbara%2Freact-range-slider) [![CI](https://github.com/gilbarbara/react-range-slider/actions/workflows/main.yml/badge.svg)](https://github.com/gilbarbara/react-range-slider/actions/workflows/main.yml) [![Maintainability](https://api.codeclimate.com/v1/badges/cc1a3d9dd8e9731beeaf/maintainability)](https://codeclimate.com/github/gilbarbara/react-range-slider/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/cc1a3d9dd8e9731beeaf/test_coverage)](https://codeclimate.com/github/gilbarbara/react-range-slider/test_coverage)
 
 A range slider component for React
 
-View the [demo](https://codesandbox.io/s/github/gilbarbara/react-range-slider/tree/master/demo)
+View the [demo](https://codesandbox.io/s/github/gilbarbara/react-range-slider/tree/main/demo)
 
 ## Installation
 
