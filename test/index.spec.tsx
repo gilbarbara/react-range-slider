@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import RangeSlider, { RangeSliderProps } from '../src';
 
@@ -12,10 +11,10 @@ function setup(axis = 'x') {
   return render(
     <RangeSlider
       axis={axis as RangeSliderProps['axis']}
+      className="test"
       onAfterEnd={mockOnAfterEnd}
       onChange={mockOnChange}
       onDragEnd={mockOnDragEnd}
-      className="test"
     />,
   );
 }
@@ -47,9 +46,9 @@ describe('RangeSlider', () => {
     });
 
     it('should handle mouse events', () => {
-      const { getByRole } = setup();
+      setup();
 
-      fireEvent.mouseDown(getByRole('slider'), {
+      fireEvent.mouseDown(screen.getByRole('slider'), {
         clientX: 100,
         clientY: 0,
         currentTarget: {},
@@ -70,13 +69,13 @@ describe('RangeSlider', () => {
       expect(mockOnAfterEnd).toHaveBeenLastCalledWith({ x: 65, y: 0 }, expect.any(Object));
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 65, y: 0 }, expect.any(Object));
       expect(mockOnDragEnd).toHaveBeenLastCalledWith({ x: 65, y: 0 }, expect.any(Object));
-      expect(getByRole('slider')).toMatchSnapshot();
+      expect(screen.getByRole('slider')).toMatchSnapshot();
     });
 
     it('should handle touch events', () => {
-      const { getByRole } = setup();
+      setup();
 
-      fireEvent.touchStart(getByRole('slider'), {
+      fireEvent.touchStart(screen.getByRole('slider'), {
         touches: [
           {
             clientX: 100,
@@ -104,12 +103,12 @@ describe('RangeSlider', () => {
       expect(mockOnAfterEnd).toHaveBeenLastCalledWith({ x: 25, y: 0 }, expect.any(Object));
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 25, y: 0 }, expect.any(Object));
       expect(mockOnDragEnd).toHaveBeenLastCalledWith({ x: 25, y: 0 }, expect.any(Object));
-      expect(getByRole('slider')).toMatchSnapshot();
+      expect(screen.getByRole('slider')).toMatchSnapshot();
     });
 
     it('should handle clicks on the track', () => {
-      const { getByRole, getAllByRole } = setup();
-      const [track] = getAllByRole('presentation');
+      setup();
+      const [track] = screen.getAllByRole('presentation');
 
       fireEvent.click(track, {
         clientX: 80,
@@ -119,29 +118,29 @@ describe('RangeSlider', () => {
 
       expect(mockOnAfterEnd).toHaveBeenLastCalledWith({ x: 15, y: 0 }, expect.any(Object));
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 15, y: 0 }, expect.any(Object));
-      expect(getByRole('slider')).toMatchSnapshot();
+      expect(screen.getByRole('slider')).toMatchSnapshot();
     });
 
     it('should handle focus, keydown and blur', () => {
-      const { getByRole } = setup();
+      setup();
 
-      fireEvent.focus(getByRole('slider'));
+      fireEvent.focus(screen.getByRole('slider'));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowRight' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowRight' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 1, y: 0 }, expect.any(Object));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowUp' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 2, y: 0 }, expect.any(Object));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowLeft' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowLeft' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 1, y: 0 }, expect.any(Object));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowDown' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowDown' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
 
-      fireEvent.blur(getByRole('slider'));
+      fireEvent.blur(screen.getByRole('slider'));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowUp' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
     });
   });
@@ -154,25 +153,25 @@ describe('RangeSlider', () => {
     });
 
     it('should handle focus, keydown and blur', () => {
-      const { getByRole } = setup('xy');
+      setup('xy');
 
-      fireEvent.focus(getByRole('slider'));
+      fireEvent.focus(screen.getByRole('slider'));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowRight' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowRight' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 1, y: 0 }, expect.any(Object));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowUp' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 1, y: 1 }, expect.any(Object));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowLeft' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowLeft' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 1 }, expect.any(Object));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowDown' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowDown' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
 
-      fireEvent.blur(getByRole('slider'));
+      fireEvent.blur(screen.getByRole('slider'));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowUp' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
     });
   });
@@ -185,25 +184,25 @@ describe('RangeSlider', () => {
     });
 
     it('should handle focus, keydown and blur', () => {
-      const { getByRole } = setup('y');
+      setup('y');
 
-      fireEvent.focus(getByRole('slider'));
+      fireEvent.focus(screen.getByRole('slider'));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowRight' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowRight' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 1 }, expect.any(Object));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowUp' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 2 }, expect.any(Object));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowLeft' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowLeft' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 1 }, expect.any(Object));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowDown' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowDown' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
 
-      fireEvent.blur(getByRole('slider'));
+      fireEvent.blur(screen.getByRole('slider'));
 
-      fireEvent.keyDown(getByRole('slider'), { code: 'ArrowUp' });
+      fireEvent.keyDown(screen.getByRole('slider'), { code: 'ArrowUp' });
       expect(mockOnChange).toHaveBeenLastCalledWith({ x: 0, y: 0 }, expect.any(Object));
     });
   });

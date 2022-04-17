@@ -4,7 +4,7 @@ import {
   getPosition,
   isNumber,
   isUndefined,
-  num,
+  parseNumber,
   removeProperties,
   round,
 } from '../src/utils';
@@ -121,16 +121,16 @@ describe('utils', () => {
 
   describe('num', () => {
     it('should return a number', () => {
-      expect(num(5)).toBe(5);
-      expect(num('5')).toBe(5);
+      expect(parseNumber(5)).toBe(5);
+      expect(parseNumber('5')).toBe(5);
     });
   });
 
   describe('removeProperties', () => {
     it('should return properly', () => {
-      const obj = { a: 1, b: 2 };
+      const object = { a: 1, b: 2 };
 
-      expect(removeProperties(obj, 'b')).toEqual({ a: 1 });
+      expect(removeProperties(object, 'b')).toEqual({ a: 1 });
     });
   });
 

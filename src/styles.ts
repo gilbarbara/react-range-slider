@@ -1,7 +1,7 @@
 import { deepmerge } from 'deepmerge-ts';
-import { num } from './utils';
 
-import { RangeSliderStyles, RangeSliderStylesProp, RangeSliderStylesOptions } from './types';
+import { RangeSliderStyles, RangeSliderStylesOptions, RangeSliderStylesProp } from './types';
+import { parseNumber } from './utils';
 
 const defaultOptions = {
   height: '20px',
@@ -84,7 +84,7 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
     },
     sliderX: {
       ...slider,
-      height: num(options.height) + num(options.padding) * 2,
+      height: parseNumber(options.height) + parseNumber(options.padding) * 2,
       width: '100%',
     },
     sliderXY: {
@@ -95,13 +95,13 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
     sliderY: {
       ...slider,
       height: '100%',
-      width: num(options.width) + num(options.padding) * 2,
+      width: parseNumber(options.width) + parseNumber(options.padding) * 2,
     },
     thumbX: {
       ...thumb,
-      height: num(options.height) + num(options.thumbSpace),
-      left: -(num(options.thumbSize) / 2),
-      top: -(num(options.thumbSpace) / 2),
+      height: parseNumber(options.height) + parseNumber(options.thumbSpace),
+      left: -(parseNumber(options.thumbSize) / 2),
+      top: -(parseNumber(options.thumbSpace) / 2),
       width: options.thumbSize,
     },
     thumbXY: {
@@ -109,18 +109,18 @@ export default function getStyles(styles?: RangeSliderStylesProp): RangeSliderSt
       backgroundColor: 'transparent',
       border: options.thumbBorder,
       borderRadius: options.thumbBorderRadiusXY,
-      bottom: -(num(options.thumbSizeXY) / 2),
+      bottom: -(parseNumber(options.thumbSizeXY) / 2),
       height: options.thumbSizeXY,
-      left: -(num(options.thumbSizeXY) / 2),
+      left: -(parseNumber(options.thumbSizeXY) / 2),
       position: 'absolute',
       width: options.thumbSizeXY,
     },
     thumbY: {
       ...thumb,
-      bottom: -(num(options.thumbSize) / 2),
+      bottom: -(parseNumber(options.thumbSize) / 2),
       height: options.thumbSize,
-      left: -(num(options.thumbSpace) / 2),
-      width: num(options.width) + num(options.thumbSpace),
+      left: -(parseNumber(options.thumbSpace) / 2),
+      width: parseNumber(options.width) + parseNumber(options.thumbSpace),
     },
     trackX: {
       ...track,
