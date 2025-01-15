@@ -7,25 +7,31 @@ export interface RangeSliderPosition {
   y: number;
 }
 
+export interface RangeSliderProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragEnd'> {
+  axis?: 'x' | 'y' | 'xy';
+  classNamePrefix?: string;
+  onAfterEnd?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
+  onChange?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
+  onDragEnd?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
+  styles?: RangeSliderStylesProp;
+  x?: number;
+  xMax?: number;
+  xMin?: number;
+  xStep?: number;
+  y?: number;
+  yMax?: number;
+  yMin?: number;
+  yStep?: number;
+}
+
 export interface RangeSliderSize {
   height?: string;
   width?: string;
 }
 
-export interface RangeSliderStylesOptions {
-  height: string | number;
-  padding: string | number;
-  rangeColor: string;
-  thumbBorder: string | number;
-  thumbBorderRadius: string | number;
-  thumbBorderRadiusXY: string | number;
-  thumbColor: string;
-  thumbSize: string | number;
-  thumbSizeXY: string | number;
-  thumbSpace: string | number;
-  trackBorderRadius: string | number;
-  trackColor: string;
-  width: string | number;
+export interface RangeSliderState extends RangeSliderPosition {
+  isDragging: boolean;
 }
 
 export interface RangeSliderStyles {
@@ -44,28 +50,22 @@ export interface RangeSliderStyles {
   trackY: React.CSSProperties;
 }
 
+export interface RangeSliderStylesOptions {
+  height: string | number;
+  padding: string | number;
+  rangeColor: string;
+  thumbBorder: string | number;
+  thumbBorderRadius: string | number;
+  thumbBorderRadiusXY: string | number;
+  thumbColor: string;
+  thumbSize: string | number;
+  thumbSizeXY: string | number;
+  thumbSpace: string | number;
+  trackBorderRadius: string | number;
+  trackColor: string;
+  width: string | number;
+}
+
 export interface RangeSliderStylesProp extends Partial<RangeSliderStyles> {
   options?: Partial<RangeSliderStylesOptions>;
-}
-
-export interface RangeSliderState extends RangeSliderPosition {
-  isDragging: boolean;
-}
-
-export interface RangeSliderProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onDragEnd'> {
-  axis?: 'x' | 'y' | 'xy';
-  classNamePrefix?: string;
-  onAfterEnd?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
-  onChange?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
-  onDragEnd?: (position: RangeSliderPosition, props: RangeSliderProps) => void;
-  styles?: RangeSliderStylesProp;
-  x?: number;
-  xMax?: number;
-  xMin?: number;
-  xStep?: number;
-  y?: number;
-  yMax?: number;
-  yMin?: number;
-  yStep?: number;
 }

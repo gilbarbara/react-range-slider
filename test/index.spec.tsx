@@ -3,9 +3,13 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import RangeSlider, { RangeSliderProps } from '../src';
 
-const mockOnAfterEnd = jest.fn();
-const mockOnChange = jest.fn();
-const mockOnDragEnd = jest.fn();
+const mockOnAfterEnd = vi.fn();
+const mockOnChange = vi.fn();
+const mockOnDragEnd = vi.fn();
+
+process.on('warning', warning => {
+  console.log(warning.stack);
+});
 
 function setup(axis = 'x') {
   return render(

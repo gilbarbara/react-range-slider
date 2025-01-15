@@ -1,4 +1,6 @@
-coverage
-esm
-lib
-node_modules
+.idea/
+.tmp/
+coverage/
+demo/pnpm-lock.yaml
+dist/
+node_modules/
