@@ -1,6 +1,6 @@
 # react-range-slider
 
-[![npm version](https://badge.fury.io/js/%40gilbarbara%2Freact-range-slider.svg)](https://badge.fury.io/js/%40gilbarbara%2Freact-range-slider) [![CI](https://github.com/gilbarbara/react-range-slider/actions/workflows/main.yml/badge.svg)](https://github.com/gilbarbara/react-range-slider/actions/workflows/main.yml) [![Maintainability](https://api.codeclimate.com/v1/badges/cc1a3d9dd8e9731beeaf/maintainability)](https://codeclimate.com/github/gilbarbara/react-range-slider/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/cc1a3d9dd8e9731beeaf/test_coverage)](https://codeclimate.com/github/gilbarbara/react-range-slider/test_coverage)
+[![npm version](https://badge.fury.io/js/%40gilbarbara%2Freact-range-slider.svg)](https://badge.fury.io/js/%40gilbarbara%2Freact-range-slider) [![CI](https://github.com/gilbarbara/react-range-slider/actions/workflows/main.yml/badge.svg)](https://github.com/gilbarbara/react-range-slider/actions/workflows/main.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gilbarbara_react-range-slider&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gilbarbara_react-range-slider) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=gilbarbara_react-range-slider&metric=coverage)](https://sonarcloud.io/summary/new_code?id=gilbarbara_react-range-slider)
 
 A range slider component for React
 
@@ -14,7 +14,7 @@ npm i @gilbarbara/react-range-slider
 
 ## Usage
 
-```typescript
+```tsx
 import React, { useState } from 'react';
 import RangeSlider, { RangeSliderPosition, RangeSliderProps } from '@gilbarbara/react-range-slider';
 
@@ -72,9 +72,9 @@ It is called after dragging the thumb
 You can customize the UI with a `styles` prop.
 Check out [styles.ts](src/styles.ts) for more information.
 
-```jsx
+```tsx
 <RangeSlider
-  ...
+  // ...
   styles={{
     height: '10px',
     trackBorderRadius: 0,
