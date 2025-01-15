@@ -24,7 +24,7 @@ export function getCoordinates(
 ): RangeSliderPosition {
   if ('touches' in event) {
     // eslint-disable-next-line unicorn/prefer-spread
-    const [touch] = [...Array.from(event.touches)];
+    const [touch] = Array.from(event.touches);
 
     return {
       x: touch ? touch.clientX : lastPosition.x,
@@ -36,6 +36,25 @@ export function getCoordinates(
     x: event.clientX,
     y: event.clientY,
   };
+}
+
+/**
+ * Get a normalized value
+ */
+export function getNormalizedValue(name: 'x' | 'y', props: RangeSliderProps): number {
+  const value = props[name] ?? 0;
+  const min = name === 'x' ? props.xMin : props.yMin;
+  const max = name === 'x' ? props.xMax : props.yMax;
+
+  if (isNumber(min) && value < min) {
+    return min;
+  }
+
+  if (isNumber(max) && value > max) {
+    return max;
+  }
+
+  return value;
 }
 
 export function getPosition(
@@ -80,25 +99,6 @@ export function getPosition(
 }
 
 /**
- * Get a normalized value
- */
-export function getNormalizedValue(name: 'x' | 'y', props: RangeSliderProps): number {
-  const value = props[name] || 0;
-  const min = name === 'x' ? props.xMin : props.yMin;
-  const max = name === 'x' ? props.xMax : props.yMax;
-
-  if (isNumber(min) && value < min) {
-    return min;
-  }
-
-  if (isNumber(max) && value > max) {
-    return max;
-  }
-
-  return value;
-}
-
-/**
  * Check if the value is a number
  */
 export function isNumber(value: unknown): value is number {
@@ -134,7 +134,7 @@ export function removeProperties<T extends PlainObject, K extends keyof T>(
 
   for (const key in input) {
     /* istanbul ignore else */
-    if ({}.hasOwnProperty.call(input, key)) {
+    if (Object.hasOwn(input, key)) {
       if (!filter.includes(key as unknown as K)) {
         output[key] = input[key];
       }

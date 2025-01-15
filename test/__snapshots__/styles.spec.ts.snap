@@ -1,32 +1,32 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`styles with custom styles should return a modified RangeSliderStyles 1`] = `
-Object {
-  "options": Object {
+exports[`styles > with custom styles > should return a modified RangeSliderStyles 1`] = `
+{
+  "options": {
     "thumbBorderRadius": 0,
     "trackBorderRadius": 0,
   },
-  "rail": Object {
+  "rail": {
     "boxSizing": "border-box",
     "height": "20px",
     "position": "absolute",
     "transition": "height 0.4s, width 0.4s",
     "width": "20px",
   },
-  "rangeX": Object {
+  "rangeX": {
     "backgroundColor": "#007bff",
     "borderRadius": 0,
     "height": "100%",
     "position": "absolute",
     "top": 0,
   },
-  "rangeXY": Object {
+  "rangeXY": {
     "backgroundColor": "#007bff",
     "borderRadius": 0,
     "bottom": 0,
     "position": "absolute",
   },
-  "rangeY": Object {
+  "rangeY": {
     "backgroundColor": "#007bff",
     "borderRadius": 0,
     "bottom": 0,
@@ -34,7 +34,7 @@ Object {
     "position": "absolute",
     "width": "100%",
   },
-  "sliderX": Object {
+  "sliderX": {
     "boxSizing": "border-box",
     "display": "inline-block",
     "height": 32,
@@ -42,7 +42,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": "100%",
   },
-  "sliderXY": Object {
+  "sliderXY": {
     "boxSizing": "border-box",
     "display": "inline-block",
     "height": "100%",
@@ -50,7 +50,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": "100%",
   },
-  "sliderY": Object {
+  "sliderY": {
     "boxSizing": "border-box",
     "display": "inline-block",
     "height": "100%",
@@ -58,7 +58,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": 32,
   },
-  "thumbX": Object {
+  "thumbX": {
     "backgroundColor": "#fff",
     "border": "2px solid #000",
     "borderRadius": 0,
@@ -71,7 +71,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": "10px",
   },
-  "thumbXY": Object {
+  "thumbXY": {
     "backgroundColor": "transparent",
     "border": "2px solid #000",
     "borderRadius": "50%",
@@ -84,7 +84,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": "20px",
   },
-  "thumbY": Object {
+  "thumbY": {
     "backgroundColor": "#fff",
     "border": "2px solid #000",
     "borderRadius": 0,
@@ -97,7 +97,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": 26,
   },
-  "trackX": Object {
+  "trackX": {
     "backgroundColor": "#ccc",
     "borderRadius": 0,
     "boxSizing": "border-box",
@@ -105,7 +105,7 @@ Object {
     "position": "relative",
     "width": "100%",
   },
-  "trackXY": Object {
+  "trackXY": {
     "backgroundColor": "#ccc",
     "borderRadius": 0,
     "boxSizing": "border-box",
@@ -114,7 +114,7 @@ Object {
     "position": "relative",
     "width": "100%",
   },
-  "trackY": Object {
+  "trackY": {
     "backgroundColor": "#ccc",
     "borderRadius": 0,
     "boxSizing": "border-box",
@@ -126,29 +126,29 @@ Object {
 }
 `;
 
-exports[`styles without custom styles should return a RangeSliderStyles 1`] = `
-Object {
-  "rail": Object {
+exports[`styles > without custom styles > should return a RangeSliderStyles 1`] = `
+{
+  "rail": {
     "boxSizing": "border-box",
     "height": "20px",
     "position": "absolute",
     "transition": "height 0.4s, width 0.4s",
     "width": "20px",
   },
-  "rangeX": Object {
+  "rangeX": {
     "backgroundColor": "#007bff",
     "borderRadius": "3px",
     "height": "100%",
     "position": "absolute",
     "top": 0,
   },
-  "rangeXY": Object {
+  "rangeXY": {
     "backgroundColor": "#007bff",
     "borderRadius": "3px",
     "bottom": 0,
     "position": "absolute",
   },
-  "rangeY": Object {
+  "rangeY": {
     "backgroundColor": "#007bff",
     "borderRadius": "3px",
     "bottom": 0,
@@ -156,7 +156,7 @@ Object {
     "position": "absolute",
     "width": "100%",
   },
-  "sliderX": Object {
+  "sliderX": {
     "boxSizing": "border-box",
     "display": "inline-block",
     "height": 32,
@@ -164,7 +164,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": "100%",
   },
-  "sliderXY": Object {
+  "sliderXY": {
     "boxSizing": "border-box",
     "display": "inline-block",
     "height": "100%",
@@ -172,7 +172,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": "100%",
   },
-  "sliderY": Object {
+  "sliderY": {
     "boxSizing": "border-box",
     "display": "inline-block",
     "height": "100%",
@@ -180,7 +180,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": 32,
   },
-  "thumbX": Object {
+  "thumbX": {
     "backgroundColor": "#fff",
     "border": "2px solid #000",
     "borderRadius": "4px",
@@ -193,7 +193,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": "10px",
   },
-  "thumbXY": Object {
+  "thumbXY": {
     "backgroundColor": "transparent",
     "border": "2px solid #000",
     "borderRadius": "50%",
@@ -206,7 +206,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": "20px",
   },
-  "thumbY": Object {
+  "thumbY": {
     "backgroundColor": "#fff",
     "border": "2px solid #000",
     "borderRadius": "4px",
@@ -219,7 +219,7 @@ Object {
     "transition": "height 0.4s, width 0.4s",
     "width": 26,
   },
-  "trackX": Object {
+  "trackX": {
     "backgroundColor": "#ccc",
     "borderRadius": "3px",
     "boxSizing": "border-box",
@@ -227,7 +227,7 @@ Object {
     "position": "relative",
     "width": "100%",
   },
-  "trackXY": Object {
+  "trackXY": {
     "backgroundColor": "#ccc",
     "borderRadius": "3px",
     "boxSizing": "border-box",
@@ -236,7 +236,7 @@ Object {
     "position": "relative",
     "width": "100%",
   },
-  "trackY": Object {
+  "trackY": {
     "backgroundColor": "#ccc",
     "borderRadius": "3px",
     "boxSizing": "border-box",
